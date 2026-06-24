@@ -1,0 +1,1426 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>NatCon Conference Website — Web Redesign + NatCon 2027 App Concept</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Inter+Tight:wght@600;700;800&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --navy:#16263F;
+    --coral:#1B7F72;   /* primary accent — teal, kept var name for drop-in consistency */
+    --gold:#D99A3D;    /* secondary accent — keynote/highlight tag */
+    --cream:#EFF4F2;
+    --grey:#5f6b68;
+    --hair:#d7e1de;
+    --tag-exec:#475569;     /* high-fidelity prototype tag colors */
+    --tag-policy:#8B5FBF;
+    --tag-peer:#3FA66B;
+    --tag-research:#3E7BD9;
+    --tag-spots:#C0622B;
+  }
+  *{box-sizing:border-box;}
+  body{
+    margin:0;
+    font-family:'Inter', Arial, Helvetica, sans-serif;
+    background:var(--cream);
+    color:#1c1c1c;
+  }
+  .wrap{max-width:1100px; margin:0 auto; padding:0 32px;}
+
+  /* ===== top nav ===== */
+  .topnav{display:flex; align-items:center; justify-content:space-between; padding:22px 32px; max-width:1100px; margin:0 auto;}
+  .topnav .mark{width:34px; height:34px; border-radius:50%; background:var(--navy); color:#fff; display:flex; align-items:center; justify-content:center; font-size:12px; font-weight:700; letter-spacing:0.5px;}
+  .topnav .links{display:flex; gap:30px; font-size:12px; letter-spacing:1.5px; text-transform:uppercase; color:#1c1c1c; font-weight:600;}
+
+  /* ===== hero / project header ===== */
+  .hero-frame{background:#fff; border:1px solid var(--hair); border-radius:14px; padding:36px 28px; margin:6px 0 36px;}
+  .eyebrow{font-size:11px; letter-spacing:2px; text-transform:uppercase; color:var(--coral); font-weight:700; margin:0 0 10px;}
+  h1.proj-title{font-family:'Inter Tight', 'Inter', Arial, sans-serif; font-size:42px; font-weight:800; letter-spacing:-0.5px; color:var(--navy); margin:0 0 14px; line-height:1.05;}
+  p.proj-sub{font-size:15px; color:#3a3a3a; max-width:640px; line-height:1.6; margin:0 0 30px;}
+  .meta-row{display:flex; gap:48px; border-top:1px solid var(--hair); padding-top:20px; flex-wrap:wrap;}
+  .meta-row .m{min-width:140px;}
+  .meta-row .m .lbl{font-size:10px; letter-spacing:1.5px; text-transform:uppercase; color:var(--grey); font-weight:700; margin-bottom:6px;}
+  .meta-row .m .val{font-size:13px; color:#1c1c1c; font-weight:600; line-height:1.5;}
+  .jumplink{display:inline-block; margin-top:24px; font-size:12px; font-weight:700; letter-spacing:0.5px; color:var(--navy); text-decoration:none; border-bottom:2px solid var(--coral); padding-bottom:2px;}
+
+  /* ===== section structure ===== */
+  .section{padding:46px 0; border-bottom:1px solid var(--hair);}
+  .section:last-of-type{border-bottom:none;}
+  h2.section-title{font-size:12px; letter-spacing:2px; text-transform:uppercase; color:var(--navy); font-weight:800; margin:0 0 18px; display:flex; align-items:center; gap:10px;}
+  h2.section-title::before{content:""; width:18px; height:3px; background:var(--coral); display:inline-block;}
+  h3.sub-title{font-size:13px; letter-spacing:0.5px; text-transform:uppercase; color:#1c1c1c; font-weight:700; margin:26px 0 10px;}
+  p.body-text{font-size:14px; line-height:1.75; color:#2b2b2b; max-width:700px; margin:0 0 14px;}
+  ul.case-list{margin:0 0 14px; padding-left:18px; max-width:700px;}
+  ul.case-list li{font-size:14px; line-height:1.7; color:#2b2b2b; margin-bottom:8px;}
+  .caption{font-size:11px; color:var(--grey); margin:10px 0 0; font-style:italic;}
+
+  .groups-row{display:flex; gap:20px; flex-wrap:wrap; margin:18px 0 10px;}
+  .group-card{flex:1; min-width:220px; background:#fff; border:1px solid var(--hair); border-radius:10px; padding:18px;}
+  .group-card .gname{font-size:11px; letter-spacing:1px; text-transform:uppercase; font-weight:800; color:var(--coral); margin-bottom:8px;}
+  .group-card p{font-size:13px; line-height:1.6; color:#2b2b2b; margin:0;}
+
+  .insight-row{display:flex; gap:20px; flex-wrap:wrap; margin:18px 0 10px;}
+  .insight{flex:1; min-width:220px;}
+  .insight .itag{font-size:12px; font-weight:800; color:var(--navy); margin-bottom:6px; letter-spacing:0.3px;}
+  .insight p{font-size:13px; line-height:1.65; color:#2b2b2b; margin:0;}
+
+  /* ===== rich persona cards ===== */
+  .persona-entry{display:flex; gap:36px; margin:34px 0; flex-wrap:wrap; align-items:flex-start;}
+  .persona-intro{flex:0 0 210px; min-width:190px;}
+  .persona-intro .ptype{font-size:11.5px; font-weight:800; letter-spacing:1px; color:var(--coral); text-transform:uppercase; margin-bottom:10px;}
+  .persona-intro h3{font-family:'Inter Tight','Inter',Arial,sans-serif; font-size:22px; font-weight:800; color:var(--navy); margin:0 0 12px; line-height:1.25;}
+  .persona-intro p{font-size:13px; line-height:1.65; color:#2b2b2b; margin:0;}
+  .persona-card{flex:1; min-width:320px; background:#fff; border:1px solid var(--hair); border-radius:14px; padding:26px; display:flex; gap:22px; flex-wrap:wrap;}
+  .avatar-block{width:120px; height:150px; border-radius:10px; flex-shrink:0; display:flex; align-items:center; justify-content:center; color:#fff; font-family:'Inter Tight','Inter',Arial,sans-serif; font-size:30px; font-weight:800; overflow:hidden;}
+  .avatar-block img{width:100%; height:100%; object-fit:cover; object-position:center top; display:block;}
+  .persona-card .pcard-main{flex:1; min-width:240px;}
+  .persona-card .pname2{font-size:17px; font-weight:800; color:var(--navy); margin:0 0 2px;}
+  .persona-card .psub{font-size:12px; color:var(--grey); margin:0 0 14px;}
+  .apps-row{display:flex; gap:8px; margin-bottom:16px;}
+  .app-icon{width:28px; height:28px; border-radius:8px; display:flex; align-items:center; justify-content:center; color:#fff; flex-shrink:0;}
+  .app-icon svg{width:15px; height:15px; display:block;}
+  .persona-card .seg-label{font-size:11px; font-weight:800; letter-spacing:0.5px; text-transform:uppercase; color:var(--navy); margin:0 0 4px;}
+  .persona-card .bio{font-size:13px; line-height:1.6; color:#2b2b2b; margin:0 0 16px;}
+  .persona-quote{font-size:14px; font-style:italic; line-height:1.5; color:var(--navy); border-left:3px solid var(--coral); padding-left:14px; margin:0 0 18px;}
+  .persona-quote b{font-weight:800; color:var(--coral); font-style:normal;}
+  .plists{display:flex; gap:18px; flex-wrap:wrap;}
+  .plist{flex:1; min-width:140px;}
+  .plist .plabel{font-size:11px; font-weight:800; letter-spacing:0.5px; text-transform:uppercase; color:var(--navy); margin-bottom:6px;}
+  .plist ul{margin:0; padding-left:16px;}
+  .plist li{font-size:12.5px; line-height:1.6; color:#2b2b2b; margin-bottom:3px;}
+
+  .hmw-block{margin:14px 0 6px;}
+  .hmw{font-family:'Inter Tight','Inter',Arial,sans-serif; font-size:19px; font-style:italic; font-weight:600; color:var(--navy); margin:0 0 14px; max-width:680px; line-height:1.4;}
+  .hmw span{color:var(--coral);}
+
+  /* ===== sitemap + user-flow diagrams ===== */
+  .diagram-card{background:#fff; border:1px solid var(--hair); border-radius:14px; padding:22px; margin:20px 0 6px; overflow-x:auto;}
+  .diagram-card svg{display:block; min-width:640px; width:100%; height:auto;}
+  .diagram-card text{font-family:'Inter', Arial, Helvetica, sans-serif;}
+  .legend{display:flex; gap:18px; flex-wrap:wrap; margin-top:16px; padding-top:14px; border-top:1px solid var(--hair); font-size:11px; color:var(--grey);}
+  .legend .key{display:flex; align-items:center; gap:6px;}
+  .legend .sw{display:inline-block; width:13px; height:13px; border-radius:3px; flex-shrink:0;}
+
+  /* ===== lo-fi wireframes ===== */
+  .foundation-tray{background:#e3ece9; border-radius:14px; padding:34px 24px 28px; margin:18px 0 6px; display:flex; gap:30px; justify-content:center; flex-wrap:wrap;}
+  .wf-unit{width:190px;}
+  .wireframe{background:#fff; border:1px solid #ccc; border-radius:6px; padding:14px 12px; min-height:330px;}
+  .wf-bar{height:16px; background:#e2e2e2; border-radius:4px; margin-bottom:12px;}
+  .wf-bar.sm{height:10px; width:55%;}
+  .wf-circle{width:26px; height:26px; border-radius:50%; background:#d6d6d6; flex-shrink:0;}
+  .wf-circle.lg{width:64px; height:64px; margin:6px auto 8px;}
+  .wf-line{height:8px; background:#e2e2e2; border-radius:3px; margin-bottom:6px;}
+  .wf-line.w60{width:60%;}
+  .wf-line.w40{width:40%;}
+  .wf-row{display:flex; align-items:center; gap:8px; padding:8px 0; border-bottom:1px solid #eee;}
+  .wf-row .wf-col{flex:1;}
+  .wf-pill{width:34px; height:9px; background:#dcdcdc; border-radius:5px; margin-left:auto; flex-shrink:0;}
+  .wf-caption{margin-top:14px; text-align:center;}
+  .wf-caption .name{font-size:11px; letter-spacing:1px; text-transform:uppercase; font-weight:800; color:var(--navy); margin-bottom:8px;}
+  .wf-caption p{font-size:12px; line-height:1.55; color:#2b2b2b; max-width:195px; margin:0 auto;}
+
+  /* ===== browser-frame hero recreation (real conference website) ===== */
+  .browser-frame{background:#fff; border:1px solid var(--hair); border-radius:14px; overflow:hidden; max-width:760px; margin:0 auto; box-shadow:0 22px 44px -16px rgba(15,35,30,0.18);}
+  .browser-bar{display:flex; align-items:center; gap:8px; background:#e6efec; padding:10px 14px; border-bottom:1px solid var(--hair);}
+  .browser-bar .dot{width:9px; height:9px; border-radius:50%; background:#cdd9d5;}
+  .browser-bar .url{flex:1; background:#fff; border-radius:6px; padding:5px 12px; font-size:11px; color:var(--grey); margin-left:6px;}
+  .bh-hero{background:linear-gradient(180deg, var(--navy), #1f3a52 75%); color:#fff; padding:34px 26px 28px; text-align:center;}
+  .bh-badge{width:30px; height:30px; border-radius:9px; background:var(--coral); display:flex; align-items:center; justify-content:center; font-weight:800; font-size:13px; margin:0 auto 10px;}
+  .bh-hero .when{font-size:11px; letter-spacing:1px; text-transform:uppercase; color:#bcd6cf; margin-bottom:10px;}
+  .bh-hero h4{font-family:'Inter Tight','Inter',Arial,sans-serif; font-size:22px; font-weight:800; margin:0 0 8px; font-style:italic;}
+  .bh-hero .where{font-size:12px; color:#cfe3de;}
+  .bh-stats{display:flex; background:#fff;}
+  .bh-stat{flex:1; text-align:center; padding:18px 6px; border-right:1px solid var(--hair);}
+  .bh-stat:last-child{border-right:none;}
+  .bh-stat .num{font-family:'Inter Tight','Inter',Arial,sans-serif; font-size:20px; font-weight:800; color:var(--navy);}
+  .bh-stat .lbl{font-size:10px; text-transform:uppercase; letter-spacing:0.5px; color:var(--grey); margin-top:2px;}
+  .bh-chips{padding:20px 24px 26px; background:#fff;}
+  .bh-chips .lbl2{font-size:10px; font-weight:800; letter-spacing:1px; text-transform:uppercase; color:var(--grey); margin-bottom:10px; text-align:center;}
+  .chip-cloud{display:flex; flex-wrap:wrap; gap:7px; justify-content:center;}
+  .chip-cloud span{font-size:11px; background:var(--cream); border:1px solid var(--hair); color:#2b2b2b; padding:5px 11px; border-radius:14px;}
+
+  /* ===== NatCon 2027 app phone mockups ===== */
+  .connect-row{display:flex; gap:24px; flex-wrap:wrap; justify-content:center; padding:8px 0 4px;}
+  .phone{background:#1c1c1c; border-radius:26px; padding:10px; width:212px;}
+  .phone .island2{width:50px; height:15px; border-radius:8px; background:#000; margin:0 auto 8px;}
+  .phone .pscreen{background:var(--cream); border-radius:14px; padding:13px 11px; min-height:400px;}
+  .phone .wordmark{font-size:12.5px; font-weight:bold; color:var(--navy); margin-bottom:3px;}
+  .phone .wordmark span{border-bottom:2px solid var(--coral);}
+  .phone .datepill{display:inline-block; font-size:9px; font-weight:700; color:var(--coral); background:#e2f0ec; border-radius:8px; padding:2px 7px; margin-bottom:8px;}
+  .phone .tagline{font-size:10.5px; font-weight:600; color:#2b2b2b; margin-bottom:10px; line-height:1.3;}
+  .stat-mini-row{display:flex; gap:5px; margin-bottom:10px;}
+  .stat-mini{flex:1; background:#fff; border:1px solid #d3ded9; border-radius:7px; padding:6px 3px; text-align:center;}
+  .stat-mini .n{font-size:11px; font-weight:800; color:var(--navy); display:block;}
+  .stat-mini .l{font-size:7px; color:var(--grey); text-transform:uppercase;}
+  .section-mini-lbl{font-size:9.5px; font-weight:800; color:var(--navy); text-transform:uppercase; letter-spacing:0.4px; margin-bottom:6px;}
+  .session-mini{background:#fff; border:1px solid #d3ded9; border-left:3px solid var(--gold); border-radius:8px; padding:8px 9px; margin-bottom:8px;}
+  .session-mini.clinical{border-left-color:var(--coral);}
+  .session-mini .tag-mini{font-size:8px; font-weight:800; text-transform:uppercase; color:var(--gold); margin-bottom:2px; display:block;}
+  .session-mini.clinical .tag-mini{color:var(--coral);}
+  .session-mini .ttl{font-size:10px; font-weight:700; color:#1c1c1c; line-height:1.25; margin-bottom:2px;}
+  .session-mini .meta{font-size:8.5px; color:var(--grey);}
+  .session-mini .ok{font-size:8.5px; color:var(--coral); font-weight:700;}
+  .stat-pill-row{display:flex; gap:6px; margin-bottom:8px;}
+  .stat-pill{flex:1; text-align:center; font-size:9px; color:var(--grey);}
+  .stat-pill b{display:block; font-size:13px; color:var(--navy); font-family:'Inter Tight','Inter',Arial,sans-serif;}
+  .search-mini{background:#fff; border:1px solid #d3ded9; border-radius:7px; padding:6px 9px; font-size:9px; color:#9aa39f; margin-bottom:8px;}
+  .chip-row-mini{display:flex; gap:5px; margin-bottom:9px; flex-wrap:wrap;}
+  .chip-row-mini span{font-size:8px; padding:3px 8px; border-radius:9px; background:#fff; border:1px solid #d3ded9; color:#2b2b2b;}
+  .chip-row-mini span.active{background:var(--navy); color:#fff; border-color:var(--navy);}
+  .attendee-row{display:flex; align-items:center; gap:7px; padding:6px 0; border-bottom:1px solid #e1e9e5;}
+  .attendee-row .av{width:24px; height:24px; border-radius:50%; color:#fff; font-size:9px; font-weight:800; display:flex; align-items:center; justify-content:center; flex-shrink:0;}
+  .attendee-row .nm{flex:1;}
+  .attendee-row .nm .n1{font-size:9.5px; font-weight:700; color:#1c1c1c; display:block;}
+  .attendee-row .nm .n2{font-size:7.5px; color:var(--grey);}
+  .btn-pill-mini{font-size:7.5px; font-weight:800; border-radius:9px; padding:3px 7px; flex-shrink:0;}
+  .btn-pill-mini.connect{background:var(--coral); color:#fff;}
+  .btn-pill-mini.connected{background:#fff; border:1px solid var(--coral); color:var(--coral);}
+  .progress-track{height:6px; background:#dde7e3; border-radius:4px; margin:6px 0 4px; overflow:hidden;}
+  .progress-fill{height:100%; background:var(--coral); border-radius:4px;}
+  .daytab-row{display:flex; gap:5px; margin:10px 0;}
+  .daytab{flex:1; text-align:center; font-size:8.5px; font-weight:700; padding:5px 0; border-radius:7px; background:#fff; border:1px solid #d3ded9; color:#2b2b2b;}
+  .daytab.active{background:var(--navy); color:#fff; border-color:var(--navy);}
+  .btn-export{display:block; width:100%; background:var(--coral); color:#fff; text-align:center; border:none; border-radius:8px; padding:9px; font-size:10.5px; font-weight:bold; margin-top:6px;}
+  .navmock{display:flex; justify-content:space-between; margin-top:10px; padding-top:8px; border-top:1px solid #dde7e3;}
+  .navmock span{font-size:6.5px; color:#9aa39f; text-align:center;}
+  .navmock span.on{color:var(--coral); font-weight:700;}
+
+  /* ===== high-fidelity prototype (final frames) ===== */
+  .hf-hero{background:var(--cream); padding:48px 24px 40px; text-align:center;}
+  .hf-brand-row{display:flex; align-items:center; justify-content:center; gap:10px; margin-bottom:8px;}
+  .hf-brand-icon{width:38px; height:38px; border-radius:10px; background:var(--coral); color:#fff; display:flex; align-items:center; justify-content:center; font-family:'Inter Tight','Inter',Arial,sans-serif; font-weight:800; font-size:19px;}
+  .hf-hero-wordmark{font-family:'Inter Tight','Inter',Arial,sans-serif; font-size:32px; font-weight:800; letter-spacing:-0.5px;}
+  .hf-hero-wordmark .navy{color:var(--navy);}
+  .hf-hero-wordmark .teal{color:var(--coral);}
+  .hf-brand-sub{font-size:12px; font-weight:600; color:var(--grey); letter-spacing:.04em; text-transform:uppercase; margin-bottom:14px;}
+  .hf-hero-caption{font-size:12.5px; color:var(--navy); margin:2px 0;}
+  .hf-hero-caption.muted{color:var(--grey); font-style:italic;}
+  .hf-frames-row{display:flex; gap:28px; flex-wrap:wrap; justify-content:center; margin:18px 0 6px;}
+  .hf-frame-col{width:268px; display:flex; flex-direction:column; align-items:center;}
+  .hf-frame-title{font-family:'Inter Tight','Inter',Arial,sans-serif; font-size:13px; font-weight:800; letter-spacing:.04em; color:var(--navy); text-transform:uppercase; text-align:center;}
+  .hf-frame-sub{font-size:11.5px; font-style:italic; color:var(--grey); text-align:center; margin:5px 0 14px; line-height:1.4; min-height:30px;}
+  .hf-iphone-frame{width:252px; background:#0c0c0c; border-radius:42px; padding:8px; box-shadow:0 20px 38px rgba(22,38,63,.2), 0 4px 9px rgba(22,38,63,.12);}
+  .hf-iphone-screen{width:100%; height:534px; background:#fff; border-radius:34px; overflow:hidden; position:relative; display:flex; flex-direction:column;}
+  .hf-island{position:absolute; top:7px; left:50%; transform:translateX(-50%); width:78px; height:20px; background:#0c0c0c; border-radius:13px; z-index:5;}
+  .hf-status-bar{display:flex; align-items:center; justify-content:space-between; padding:13px 20px 4px; font-size:12px; font-weight:700; color:#1c1c1c; z-index:4;}
+  .hf-status-icons{display:flex; align-items:center; gap:4px;}
+  .hf-status-icons svg{display:block;}
+  .hf-app-header{background:var(--navy); color:#fff; padding:11px 15px 12px; flex-shrink:0;}
+  .hf-app-back{font-size:9.5px; color:#9DB3C9; font-weight:700; margin-bottom:3px;}
+  .hf-app-title{font-family:'Inter Tight','Inter',Arial,sans-serif; font-size:18px; font-weight:800;}
+  .hf-app-subtitle{font-size:10.5px; color:#cfe0d9; margin-top:2px;}
+  .hf-app-body{flex:1; overflow:hidden; padding:0 13px;}
+  .hf-app-body.pt{padding-top:9px;}
+  .hf-day-tabs{display:flex; gap:6px; padding:9px 0 7px;}
+  .hf-day-tab{font-size:10px; font-weight:700; padding:5px 10px; border-radius:20px; background:#F1F5F3; color:var(--grey);}
+  .hf-day-tab.active{background:var(--navy); color:#fff;}
+  .hf-search-row{display:flex; gap:6px; padding:0 0 9px; align-items:center;}
+  .hf-search-box{flex:1; background:#F1F5F3; border-radius:20px; padding:6px 10px; font-size:10px; color:var(--grey); display:flex; align-items:center; gap:5px;}
+  .hf-filter-btn{width:26px; height:26px; min-width:26px; border-radius:50%; background:#F1F5F3; display:flex; align-items:center; justify-content:center;}
+  .hf-time-label{font-size:9.5px; color:var(--grey); font-weight:800; letter-spacing:.04em; text-transform:uppercase; margin:7px 0 5px;}
+  .hf-time-label:first-child{margin-top:0;}
+  .hf-session-card{background:#fff; border:1px solid var(--hair); border-radius:10px; padding:8px 10px; margin-bottom:6px;}
+  .hf-tag-chip{display:inline-block; font-size:8.5px; font-weight:800; padding:3px 7px; border-radius:20px; color:#fff; letter-spacing:.02em;}
+  .hf-tag-keynote{background:var(--gold);}
+  .hf-tag-clinical{background:var(--coral);}
+  .hf-tag-executive{background:var(--tag-exec);}
+  .hf-tag-policy{background:var(--tag-policy);}
+  .hf-tag-peer{background:var(--tag-peer);}
+  .hf-tag-research{background:var(--tag-research);}
+  .hf-card-title{font-weight:700; font-size:11.5px; color:#1c1c1c; margin:5px 0 1px; line-height:1.25;}
+  .hf-card-meta{font-size:9.5px; color:var(--grey);}
+  .hf-row-between{display:flex; align-items:center; justify-content:space-between; margin-top:6px;}
+  .hf-btn-reserve{font-size:9px; font-weight:800; color:#fff; background:var(--coral); border-radius:20px; padding:4px 10px;}
+  .hf-btn-reserved{font-size:9px; font-weight:800; color:var(--coral); background:#fff; border:1.3px solid var(--coral); border-radius:20px; padding:3px 9px; display:inline-flex; align-items:center; gap:3px;}
+  .hf-spots-left{font-size:8.5px; color:var(--tag-spots); font-weight:800;}
+  .hf-sched-footer{border-top:1px solid var(--hair); padding:8px 13px; display:flex; align-items:center; gap:9px; flex-shrink:0;}
+  .hf-progress-wrap{flex:1;}
+  .hf-progress-label{font-size:8.5px; color:var(--grey); margin-bottom:3px; font-weight:600;}
+  .hf-progress-track{height:5px; background:var(--hair); border-radius:3px; overflow:hidden;}
+  .hf-progress-fill{height:100%; background:var(--coral); border-radius:3px;}
+  .hf-btn-export{background:var(--coral); color:#fff; font-size:9px; font-weight:800; padding:7px 12px; border-radius:20px; white-space:nowrap;}
+  .hf-tab-bar{border-top:1px solid var(--hair); display:flex; align-items:center; justify-content:space-around; padding:7px 5px 11px; flex-shrink:0;}
+  .hf-tab-item{display:flex; flex-direction:column; align-items:center; gap:2px; font-size:7.5px; color:#9AA3AC; font-weight:700;}
+  .hf-tab-item.active{color:var(--coral);}
+  .hf-tab-item svg{display:block;}
+  .hf-speaker-badge-row{display:flex; align-items:center; gap:9px; padding:11px 0 7px; border-bottom:1px solid var(--hair); margin-bottom:9px;}
+  .hf-avatar-circle{width:34px; height:34px; border-radius:50%; background:var(--navy); color:#fff; display:flex; align-items:center; justify-content:center; font-weight:800; font-size:12px; flex-shrink:0;}
+  .hf-speaker-name{font-size:11.5px; font-weight:700; color:#1c1c1c;}
+  .hf-speaker-role{font-size:9px; color:var(--grey); margin-top:1px;}
+  .hf-pill-mode{display:inline-block; font-size:7.5px; font-weight:800; color:var(--gold); background:#FBF1E1; border-radius:20px; padding:2px 7px; margin-top:3px;}
+  .hf-section-label{font-size:9.5px; font-weight:800; letter-spacing:.04em; text-transform:uppercase; color:var(--navy); margin:9px 0 6px;}
+  .hf-btn-outline{font-size:9px; font-weight:800; color:var(--navy); background:#fff; border:1.3px solid var(--hair); border-radius:20px; padding:4px 9px; display:inline-block; margin-top:6px;}
+  .hf-prep-row{display:flex; align-items:center; justify-content:space-between; padding:7px 0; border-bottom:1px solid var(--hair); font-size:10px; font-weight:600; color:#1c1c1c;}
+  .hf-prep-row:last-child{border-bottom:none;}
+  .hf-chev{color:#B6BEC6; font-weight:800;}
+  .hf-net-stats-row{display:flex; gap:6px; padding:9px 0;}
+  .hf-net-stat{flex:1; background:#F6FAF8; border-radius:9px; padding:7px 5px; text-align:center;}
+  .hf-net-stat-num{font-size:14px; font-weight:800; color:var(--navy);}
+  .hf-net-stat-label{font-size:7.5px; color:var(--grey); font-weight:700; margin-top:1px;}
+  .hf-chip-row{display:flex; gap:5px; padding:4px 0 8px; overflow:hidden;}
+  .hf-chip{font-size:8.5px; font-weight:700; padding:4px 9px; border-radius:20px; background:#F1F5F3; color:var(--grey); white-space:nowrap;}
+  .hf-chip.active{background:var(--navy); color:#fff;}
+  .hf-attendee-row{display:flex; align-items:center; gap:7px; padding:6px 0; border-bottom:1px solid var(--hair);}
+  .hf-attendee-row:last-child{border-bottom:none;}
+  .hf-att-info{flex:1;}
+  .hf-att-name{font-size:10.5px; font-weight:700; color:#1c1c1c;}
+  .hf-att-tag{font-size:8px; color:var(--grey); margin-top:1px;}
+  .hf-btn-connect{font-size:8.5px; font-weight:800; color:var(--coral); background:#fff; border:1.2px solid var(--coral); border-radius:20px; padding:3px 8px; white-space:nowrap;}
+  .hf-btn-connected{font-size:8.5px; font-weight:800; color:#fff; background:var(--coral); border-radius:20px; padding:3px 8px; white-space:nowrap;}
+  .hf-booth-card{background:#F6FAF8; border:1px solid var(--hair); border-radius:10px; padding:9px 11px; margin:9px 0;}
+  .hf-booth-status{display:inline-flex; align-items:center; gap:4px; font-size:8px; font-weight:800; color:var(--coral); background:#fff; border-radius:20px; padding:3px 7px; margin-top:4px;}
+  .hf-pkg-card{background:#fff; border:1px solid var(--hair); border-radius:10px; padding:9px 11px; margin-bottom:7px; position:relative;}
+  .hf-pkg-card.popular{border-color:var(--gold);}
+  .hf-ribbon{position:absolute; top:-7px; right:9px; background:var(--gold); color:#fff; font-size:7.5px; font-weight:800; padding:3px 7px; border-radius:10px;}
+  .hf-pkg-name{font-size:11px; font-weight:800; color:#1c1c1c;}
+  .hf-pkg-price{font-size:10px; font-weight:800; color:var(--navy); margin-top:1px;}
+  .hf-pkg-includes{font-size:8.5px; color:var(--grey); margin-top:4px; line-height:1.5;}
+  .hf-btn-pkg{font-size:9px; font-weight:800; color:#fff; background:var(--navy); border-radius:20px; padding:4px 10px; display:inline-block; margin-top:6px;}
+  .hf-pkg-card.popular .hf-btn-pkg{background:var(--gold);}
+  .hf-kit-link{text-align:center; font-size:9px; font-weight:700; color:var(--coral); padding:5px 0 2px;}
+
+  /* ===== usability results stat rings ===== */
+  .usability-row{display:flex; gap:30px; flex-wrap:wrap; margin:24px 0 6px;}
+  .stat-ring-wrap{width:170px; display:flex; flex-direction:column; align-items:center; text-align:center;}
+  .stat-ring{width:150px; height:150px; border-radius:50%; display:flex; align-items:center; justify-content:center; margin-bottom:16px;}
+  .stat-ring-inner{width:112px; height:112px; border-radius:50%; background:var(--cream); display:flex; align-items:center; justify-content:center; gap:5px;}
+  .stat-ring-inner .big{font-family:'Inter Tight','Inter',Arial,sans-serif; font-size:30px; font-weight:800; color:var(--navy);}
+  .stat-ring-inner .of{font-size:13px; font-weight:700; color:var(--navy);}
+  .stat-cap{font-size:12.5px; line-height:1.55; color:#2b2b2b; max-width:165px;}
+
+  /* ===== usability results — bar cards (distinct from ring style) ===== */
+  .stat-bar-row{display:flex; gap:24px; flex-wrap:wrap; margin:24px 0 6px;}
+  .stat-bar-card{flex:1; min-width:220px; background:#fff; border:1px solid var(--hair); border-radius:12px; padding:22px 24px;}
+  .stat-bar-top{display:flex; align-items:baseline; gap:8px; margin-bottom:14px;}
+  .stat-bar-num{font-family:'Inter Tight','Inter',Arial,sans-serif; font-size:30px; font-weight:800; color:var(--navy);}
+  .stat-bar-of{font-size:13px; font-weight:700; color:var(--grey);}
+  .stat-bar-track{height:8px; background:var(--hair); border-radius:5px; overflow:hidden; margin-bottom:14px;}
+  .stat-bar-fill{height:100%; border-radius:5px; background:var(--coral);}
+  .stat-bar-cap{font-size:12.5px; line-height:1.55; color:#2b2b2b; margin:0;}
+
+  /* ===== footer ===== */
+  .site-bottom{background:var(--navy); padding:60px 32px 44px; text-align:center; margin-top:10px;}
+  .site-bottom .wordmark2{color:#fff; font-family:'Inter Tight','Inter',Arial,sans-serif; font-size:26px; font-weight:800; letter-spacing:0.5px; margin-bottom:16px;}
+  .site-bottom .li{width:30px; height:30px; border-radius:50%; background:#fff; color:var(--navy); display:inline-flex; align-items:center; justify-content:center; font-size:13px; font-weight:800;}
+
+  @media (max-width:700px){
+    h1.proj-title{font-size:30px;}
+    .meta-row{gap:24px;}
+    .topnav{padding:18px 20px;}
+    .wrap{padding:0 20px;}
+  }
+</style>
+</head>
+<body>
+<div class="hf-hero">
+  <div class="hf-brand-row">
+    <div class="hf-brand-icon">N</div>
+    <div class="hf-hero-wordmark"><span class="navy">NatCon</span> <span class="teal">2027</span></div>
+  </div>
+  <div class="hf-brand-sub">National Council for Mental Wellbeing</div>
+  <div class="hf-hero-caption">Conference companion app &middot; Apr 12&ndash;14, 2027 &middot; Ernest N. Morial Convention Center, New Orleans</div>
+  <div class="hf-hero-caption muted">High-fidelity concept &middot; iPhone 16 &middot; 390 &times; 852 pt</div>
+
+    <div class="hf-frames-row">
+
+      <!-- 01 SCHEDULE -->
+      <div class="hf-frame-col">
+        <div class="hf-frame-title">01 &mdash; Schedule</div>
+        <div class="hf-frame-sub">Find session times &amp; build your schedule</div>
+        <div class="hf-iphone-frame">
+          <div class="hf-iphone-screen">
+            <div class="hf-island"></div>
+            <div class="hf-status-bar">
+              <span>9:41</span>
+              <span class="hf-status-icons">
+                <svg width="16" height="11" viewBox="0 0 16 11"><rect x="0" y="6" width="2.5" height="5" rx="0.6" fill="#1c1c1c"/><rect x="4" y="4" width="2.5" height="7" rx="0.6" fill="#1c1c1c"/><rect x="8" y="2" width="2.5" height="9" rx="0.6" fill="#1c1c1c"/><rect x="12" y="0" width="2.5" height="11" rx="0.6" fill="#1c1c1c"/></svg>
+                <svg width="15" height="11" viewBox="0 0 15 11"><path d="M7.5 9.5a1 1 0 110 2 1 1 0 010-2zM4.4 6.8a4.4 4.4 0 016.2 0l-1.3 1.3a2.6 2.6 0 00-3.6 0L4.4 6.8zM2 4.4a7.8 7.8 0 0111 0L11.7 5.7a6 6 0 00-8.4 0L2 4.4z" fill="#1c1c1c"/></svg>
+                <svg width="24" height="11" viewBox="0 0 24 11"><rect x="0.5" y="0.5" width="20" height="10" rx="2.5" stroke="#1c1c1c"/><rect x="2" y="2" width="17" height="7" rx="1.3" fill="#1c1c1c"/><rect x="21.5" y="3.3" width="1.7" height="4.4" rx="0.8" fill="#1c1c1c"/></svg>
+              </span>
+            </div>
+            <div class="hf-app-header">
+              <div class="hf-app-title">Schedule</div>
+              <div class="hf-app-subtitle">48 sessions across 6 tracks</div>
+            </div>
+            <div class="hf-app-body pt">
+              <div class="hf-day-tabs">
+                <div class="hf-day-tab active">Apr 12</div>
+                <div class="hf-day-tab">Apr 13</div>
+                <div class="hf-day-tab">Apr 14</div>
+              </div>
+              <div class="hf-search-row">
+                <div class="hf-search-box">&#128269; Search sessions</div>
+                <div class="hf-filter-btn">&#8942;</div>
+              </div>
+              <div class="hf-time-label">9:00 AM</div>
+              <div class="hf-session-card">
+                <span class="hf-tag-chip hf-tag-keynote">Keynote</span>
+                <div class="hf-card-title">Opening Keynote: The Next Decade of Care</div>
+                <div class="hf-card-meta">Dr. Anita Rhodes &middot; Main Stage</div>
+                <div class="hf-row-between">
+                  <span class="hf-card-meta"></span>
+                  <span class="hf-btn-reserved">&#10003; Reserved</span>
+                </div>
+              </div>
+              <div class="hf-time-label">11:00 AM</div>
+              <div class="hf-session-card">
+                <span class="hf-tag-chip hf-tag-clinical">Clinical</span>
+                <div class="hf-card-title">Trauma-Informed Care in Practice</div>
+                <div class="hf-card-meta">Dr. Priya Nair &middot; Hall B-1</div>
+                <div class="hf-row-between">
+                  <span class="hf-card-meta"></span>
+                  <span class="hf-btn-reserve">+ Reserve</span>
+                </div>
+              </div>
+              <div class="hf-time-label">1:30 PM</div>
+              <div class="hf-session-card">
+                <span class="hf-tag-chip hf-tag-executive">Executive</span>
+                <div class="hf-card-title">Leading Through Crisis</div>
+                <div class="hf-card-meta">James Okafor &middot; Hall C-2</div>
+                <div class="hf-row-between">
+                  <span class="hf-spots-left">9 spots left</span>
+                  <span class="hf-btn-reserve">+ Reserve</span>
+                </div>
+              </div>
+            </div>
+            <div class="hf-sched-footer">
+              <div class="hf-progress-wrap">
+                <div class="hf-progress-label">2 of 6 reserved &middot; 33%</div>
+                <div class="hf-progress-track"><div class="hf-progress-fill" style="width:33%;"></div></div>
+              </div>
+              <div class="hf-btn-export">Export to Calendar</div>
+            </div>
+            <div class="hf-tab-bar">
+              <div class="hf-tab-item"><svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="#9AA3AC" stroke-width="2"><path d="M3 11l9-8 9 8M5 10v10h14V10"/></svg>Home</div>
+              <div class="hf-tab-item active"><svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="#1B7F72" stroke-width="2"><rect x="3" y="4" width="18" height="17" rx="2"/><path d="M3 9h18M8 2v4M16 2v4"/></svg>Schedule</div>
+              <div class="hf-tab-item"><svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="#9AA3AC" stroke-width="2"><rect x="4" y="4" width="16" height="12" rx="2"/><path d="M9 20h6M12 16v4"/></svg>Speakers</div>
+              <div class="hf-tab-item"><svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="#9AA3AC" stroke-width="2"><circle cx="8" cy="8" r="3"/><circle cx="17" cy="9" r="2.5"/><path d="M2 20c0-3 2.5-5 6-5s6 2 6 5M14 20c0-2.3 1.7-4 4.5-4 2.1 0 3.8 1.1 4.3 2.8"/></svg>Network</div>
+              <div class="hf-tab-item"><svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="#9AA3AC" stroke-width="2"><circle cx="12" cy="8" r="4"/><path d="M4 21c0-4.4 3.6-7 8-7s8 2.6 8 7"/></svg>Account</div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- 02 SPEAKERS -->
+      <div class="hf-frame-col">
+        <div class="hf-frame-title">02 &mdash; Speakers</div>
+        <div class="hf-frame-sub">Speakers find the sessions they're presenting</div>
+        <div class="hf-iphone-frame">
+          <div class="hf-iphone-screen">
+            <div class="hf-island"></div>
+            <div class="hf-status-bar">
+              <span>9:41</span>
+              <span class="hf-status-icons">
+                <svg width="16" height="11" viewBox="0 0 16 11"><rect x="0" y="6" width="2.5" height="5" rx="0.6" fill="#1c1c1c"/><rect x="4" y="4" width="2.5" height="7" rx="0.6" fill="#1c1c1c"/><rect x="8" y="2" width="2.5" height="9" rx="0.6" fill="#1c1c1c"/><rect x="12" y="0" width="2.5" height="11" rx="0.6" fill="#1c1c1c"/></svg>
+                <svg width="15" height="11" viewBox="0 0 15 11"><path d="M7.5 9.5a1 1 0 110 2 1 1 0 010-2zM4.4 6.8a4.4 4.4 0 016.2 0l-1.3 1.3a2.6 2.6 0 00-3.6 0L4.4 6.8zM2 4.4a7.8 7.8 0 0111 0L11.7 5.7a6 6 0 00-8.4 0L2 4.4z" fill="#1c1c1c"/></svg>
+                <svg width="24" height="11" viewBox="0 0 24 11"><rect x="0.5" y="0.5" width="20" height="10" rx="2.5" stroke="#1c1c1c"/><rect x="2" y="2" width="17" height="7" rx="1.3" fill="#1c1c1c"/><rect x="21.5" y="3.3" width="1.7" height="4.4" rx="0.8" fill="#1c1c1c"/></svg>
+              </span>
+            </div>
+            <div class="hf-app-header">
+              <div class="hf-app-title">My Sessions</div>
+              <div class="hf-app-subtitle">Speaker dashboard &middot; Dr. Anita Rhodes</div>
+            </div>
+            <div class="hf-app-body pt">
+              <div class="hf-speaker-badge-row">
+                <div class="hf-avatar-circle">AR</div>
+                <div>
+                  <div class="hf-speaker-name">Dr. Anita Rhodes</div>
+                  <div class="hf-speaker-role">Chief Clinical Officer, Sample Health</div>
+                  <div class="hf-pill-mode">Speaker mode</div>
+                </div>
+              </div>
+              <div class="hf-section-label">You're Presenting</div>
+              <div class="hf-session-card">
+                <span class="hf-tag-chip hf-tag-keynote">Keynote</span>
+                <div class="hf-card-title">Opening Keynote: The Next Decade of Care</div>
+                <div class="hf-card-meta">Apr 12 &middot; 9:00 AM &middot; Main Stage</div>
+                <div class="hf-card-meta" style="margin-top:4px;">Expected attendance: 1,200 &middot; AV: Confirmed</div>
+                <div class="hf-btn-outline">View session brief</div>
+              </div>
+              <div class="hf-session-card">
+                <span class="hf-tag-chip hf-tag-clinical">Panel</span>
+                <div class="hf-card-title">Panel: Measuring What Matters</div>
+                <div class="hf-card-meta">Apr 13 &middot; 2:00 PM &middot; Hall C-2</div>
+                <div class="hf-card-meta" style="margin-top:4px;">With Dr. Priya Nair, James Okafor</div>
+                <div class="hf-btn-outline">Message co-panelists</div>
+              </div>
+              <div class="hf-section-label">Prep &amp; Resources</div>
+              <div class="hf-prep-row">Upload slides <span class="hf-chev">&rsaquo;</span></div>
+              <div class="hf-prep-row">Tech &amp; AV requirements <span class="hf-chev">&rsaquo;</span></div>
+              <div class="hf-prep-row">Speaker green room map <span class="hf-chev">&rsaquo;</span></div>
+            </div>
+            <div class="hf-tab-bar">
+              <div class="hf-tab-item"><svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="#9AA3AC" stroke-width="2"><path d="M3 11l9-8 9 8M5 10v10h14V10"/></svg>Home</div>
+              <div class="hf-tab-item"><svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="#9AA3AC" stroke-width="2"><rect x="3" y="4" width="18" height="17" rx="2"/><path d="M3 9h18M8 2v4M16 2v4"/></svg>Schedule</div>
+              <div class="hf-tab-item active"><svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="#1B7F72" stroke-width="2"><rect x="4" y="4" width="16" height="12" rx="2"/><path d="M9 20h6M12 16v4"/></svg>Speakers</div>
+              <div class="hf-tab-item"><svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="#9AA3AC" stroke-width="2"><circle cx="8" cy="8" r="3"/><circle cx="17" cy="9" r="2.5"/><path d="M2 20c0-3 2.5-5 6-5s6 2 6 5M14 20c0-2.3 1.7-4 4.5-4 2.1 0 3.8 1.1 4.3 2.8"/></svg>Network</div>
+              <div class="hf-tab-item"><svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="#9AA3AC" stroke-width="2"><circle cx="12" cy="8" r="4"/><path d="M4 21c0-4.4 3.6-7 8-7s8 2.6 8 7"/></svg>Account</div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- 03 NETWORK -->
+      <div class="hf-frame-col">
+        <div class="hf-frame-title">03 &mdash; Network</div>
+        <div class="hf-frame-sub">Members find their peers attending NatCon</div>
+        <div class="hf-iphone-frame">
+          <div class="hf-iphone-screen">
+            <div class="hf-island"></div>
+            <div class="hf-status-bar">
+              <span>9:41</span>
+              <span class="hf-status-icons">
+                <svg width="16" height="11" viewBox="0 0 16 11"><rect x="0" y="6" width="2.5" height="5" rx="0.6" fill="#1c1c1c"/><rect x="4" y="4" width="2.5" height="7" rx="0.6" fill="#1c1c1c"/><rect x="8" y="2" width="2.5" height="9" rx="0.6" fill="#1c1c1c"/><rect x="12" y="0" width="2.5" height="11" rx="0.6" fill="#1c1c1c"/></svg>
+                <svg width="15" height="11" viewBox="0 0 15 11"><path d="M7.5 9.5a1 1 0 110 2 1 1 0 010-2zM4.4 6.8a4.4 4.4 0 016.2 0l-1.3 1.3a2.6 2.6 0 00-3.6 0L4.4 6.8zM2 4.4a7.8 7.8 0 0111 0L11.7 5.7a6 6 0 00-8.4 0L2 4.4z" fill="#1c1c1c"/></svg>
+                <svg width="24" height="11" viewBox="0 0 24 11"><rect x="0.5" y="0.5" width="20" height="10" rx="2.5" stroke="#1c1c1c"/><rect x="2" y="2" width="17" height="7" rx="1.3" fill="#1c1c1c"/><rect x="21.5" y="3.3" width="1.7" height="4.4" rx="0.8" fill="#1c1c1c"/></svg>
+              </span>
+            </div>
+            <div class="hf-app-header">
+              <div class="hf-app-title">Network</div>
+              <div class="hf-app-subtitle">1,800+ registered &middot; Connect &amp; find your peers</div>
+            </div>
+            <div class="hf-app-body pt">
+              <div class="hf-net-stats-row">
+                <div class="hf-net-stat"><div class="hf-net-stat-num">2</div><div class="hf-net-stat-label">CONNECTED</div></div>
+                <div class="hf-net-stat"><div class="hf-net-stat-num">6</div><div class="hf-net-stat-label">TO MEET</div></div>
+                <div class="hf-net-stat"><div class="hf-net-stat-num">150+</div><div class="hf-net-stat-label">CE CREDITS</div></div>
+              </div>
+              <div class="hf-search-row" style="padding-top:4px;">
+                <div class="hf-search-box">&#128269; Search attendees</div>
+              </div>
+              <div class="hf-chip-row">
+                <div class="hf-chip active">All</div>
+                <div class="hf-chip">Clinical</div>
+                <div class="hf-chip">Executive</div>
+                <div class="hf-chip">Policy</div>
+                <div class="hf-chip">Peer</div>
+                <div class="hf-chip">Research</div>
+              </div>
+              <div class="hf-attendee-row">
+                <div class="hf-avatar-circle" style="background:var(--coral); font-size:10px;">SM</div>
+                <div class="hf-att-info"><div class="hf-att-name">Sarah Mitchell</div><div class="hf-att-tag">Clinical</div></div>
+                <div class="hf-btn-connect">Connect</div>
+              </div>
+              <div class="hf-attendee-row">
+                <div class="hf-avatar-circle" style="background:var(--tag-exec); font-size:10px;">JC</div>
+                <div class="hf-att-info"><div class="hf-att-name">James Carter</div><div class="hf-att-tag">Executive</div></div>
+                <div class="hf-btn-connected">&#10003; Connected</div>
+              </div>
+              <div class="hf-attendee-row">
+                <div class="hf-avatar-circle" style="background:var(--tag-peer); font-size:10px;">PS</div>
+                <div class="hf-att-info"><div class="hf-att-name">Priya Sharma</div><div class="hf-att-tag">Peer</div></div>
+                <div class="hf-btn-connect">Connect</div>
+              </div>
+              <div class="hf-attendee-row">
+                <div class="hf-avatar-circle" style="background:var(--tag-policy); font-size:10px;">TG</div>
+                <div class="hf-att-info"><div class="hf-att-name">Tom Greenway</div><div class="hf-att-tag">Policy</div></div>
+                <div class="hf-btn-connect">Connect</div>
+              </div>
+              <div class="hf-attendee-row">
+                <div class="hf-avatar-circle" style="background:var(--coral); font-size:10px;">AK</div>
+                <div class="hf-att-info"><div class="hf-att-name">Aisha Kamara</div><div class="hf-att-tag">Clinical</div></div>
+                <div class="hf-btn-connected">&#10003; Connected</div>
+              </div>
+            </div>
+            <div class="hf-tab-bar">
+              <div class="hf-tab-item"><svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="#9AA3AC" stroke-width="2"><path d="M3 11l9-8 9 8M5 10v10h14V10"/></svg>Home</div>
+              <div class="hf-tab-item"><svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="#9AA3AC" stroke-width="2"><rect x="3" y="4" width="18" height="17" rx="2"/><path d="M3 9h18M8 2v4M16 2v4"/></svg>Schedule</div>
+              <div class="hf-tab-item"><svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="#9AA3AC" stroke-width="2"><rect x="4" y="4" width="16" height="12" rx="2"/><path d="M9 20h6M12 16v4"/></svg>Speakers</div>
+              <div class="hf-tab-item active"><svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="#1B7F72" stroke-width="2"><circle cx="8" cy="8" r="3"/><circle cx="17" cy="9" r="2.5"/><path d="M2 20c0-3 2.5-5 6-5s6 2 6 5M14 20c0-2.3 1.7-4 4.5-4 2.1 0 3.8 1.1 4.3 2.8"/></svg>Network</div>
+              <div class="hf-tab-item"><svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="#9AA3AC" stroke-width="2"><circle cx="12" cy="8" r="4"/><path d="M4 21c0-4.4 3.6-7 8-7s8 2.6 8 7"/></svg>Account</div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- 04 EXPO -->
+      <div class="hf-frame-col">
+        <div class="hf-frame-title">04 &mdash; Expo</div>
+        <div class="hf-frame-sub">Exhibitors hire booth space</div>
+        <div class="hf-iphone-frame">
+          <div class="hf-iphone-screen">
+            <div class="hf-island"></div>
+            <div class="hf-status-bar">
+              <span>9:41</span>
+              <span class="hf-status-icons">
+                <svg width="16" height="11" viewBox="0 0 16 11"><rect x="0" y="6" width="2.5" height="5" rx="0.6" fill="#1c1c1c"/><rect x="4" y="4" width="2.5" height="7" rx="0.6" fill="#1c1c1c"/><rect x="8" y="2" width="2.5" height="9" rx="0.6" fill="#1c1c1c"/><rect x="12" y="0" width="2.5" height="11" rx="0.6" fill="#1c1c1c"/></svg>
+                <svg width="15" height="11" viewBox="0 0 15 11"><path d="M7.5 9.5a1 1 0 110 2 1 1 0 010-2zM4.4 6.8a4.4 4.4 0 016.2 0l-1.3 1.3a2.6 2.6 0 00-3.6 0L4.4 6.8zM2 4.4a7.8 7.8 0 0111 0L11.7 5.7a6 6 0 00-8.4 0L2 4.4z" fill="#1c1c1c"/></svg>
+                <svg width="24" height="11" viewBox="0 0 24 11"><rect x="0.5" y="0.5" width="20" height="10" rx="2.5" stroke="#1c1c1c"/><rect x="2" y="2" width="17" height="7" rx="1.3" fill="#1c1c1c"/><rect x="21.5" y="3.3" width="1.7" height="4.4" rx="0.8" fill="#1c1c1c"/></svg>
+              </span>
+            </div>
+            <div class="hf-app-header">
+              <div class="hf-app-back">&lsaquo; Exhibitor Hub</div>
+              <div class="hf-app-title">Exhibit Hall</div>
+              <div class="hf-app-subtitle">200+ exhibitors &middot; Reserve your booth</div>
+            </div>
+            <div class="hf-app-body pt">
+              <div class="hf-booth-card">
+                <div class="hf-card-meta" style="font-weight:700; color:#1c1c1c; font-size:10.5px;">Your booth: B-204</div>
+                <div class="hf-card-meta">10 &times; 10 ft</div>
+                <span class="hf-booth-status">&#10003; Confirmed &middot; Apr 12&ndash;14</span>
+                <div class="hf-btn-outline">View floor plan</div>
+              </div>
+              <div class="hf-section-label">Available Packages</div>
+              <div class="hf-pkg-card">
+                <div class="hf-pkg-name">Standard Booth</div>
+                <div class="hf-pkg-price">10 &times; 10 ft &middot; $1,200</div>
+                <div class="hf-pkg-includes">2 exhibitor badges &middot; Pipe &amp; drape &middot; ID sign</div>
+                <div class="hf-btn-pkg">Reserve</div>
+              </div>
+              <div class="hf-pkg-card popular">
+                <span class="hf-ribbon">Most Popular</span>
+                <div class="hf-pkg-name">Premium Booth</div>
+                <div class="hf-pkg-price">10 &times; 20 ft &middot; $2,400</div>
+                <div class="hf-pkg-includes">4 exhibitor badges &middot; Corner placement &middot; Directory listing priority</div>
+                <div class="hf-btn-pkg">Reserve</div>
+              </div>
+              <div class="hf-pkg-card">
+                <div class="hf-pkg-name">Sponsor Pavilion</div>
+                <div class="hf-pkg-price">Custom &middot; From $5,000</div>
+                <div class="hf-pkg-includes">Logo placement &middot; Stage mention &middot; Attendee lead list</div>
+                <div class="hf-btn-pkg">Inquire</div>
+              </div>
+              <div class="hf-kit-link">Download exhibitor kit &#8595;</div>
+            </div>
+            <div class="hf-tab-bar">
+              <div class="hf-tab-item active"><svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="#1B7F72" stroke-width="2"><path d="M3 11l9-8 9 8M5 10v10h14V10"/></svg>Home</div>
+              <div class="hf-tab-item"><svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="#9AA3AC" stroke-width="2"><rect x="3" y="4" width="18" height="17" rx="2"/><path d="M3 9h18M8 2v4M16 2v4"/></svg>Schedule</div>
+              <div class="hf-tab-item"><svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="#9AA3AC" stroke-width="2"><rect x="4" y="4" width="16" height="12" rx="2"/><path d="M9 20h6M12 16v4"/></svg>Speakers</div>
+              <div class="hf-tab-item"><svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="#9AA3AC" stroke-width="2"><circle cx="8" cy="8" r="3"/><circle cx="17" cy="9" r="2.5"/><path d="M2 20c0-3 2.5-5 6-5s6 2 6 5M14 20c0-2.3 1.7-4 4.5-4 2.1 0 3.8 1.1 4.3 2.8"/></svg>Network</div>
+              <div class="hf-tab-item"><svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="#9AA3AC" stroke-width="2"><circle cx="12" cy="8" r="4"/><path d="M4 21c0-4.4 3.6-7 8-7s8 2.6 8 7"/></svg>Account</div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+    </div>
+
+  <div class="hf-hero-caption muted" style="margin-top:18px;">NatCon 2027 App Concept &middot; &ldquo;Where innovation meets action.&rdquo;</div>
+</div>
+
+
+<nav class="topnav">
+  <div class="mark">MP</div>
+  <div class="links"><span>Work</span><span>About</span><span>Contact</span></div>
+</nav>
+
+<div class="wrap">
+
+  <!-- ============ PROJECT 1: NATCON LANDING PAGE ============ -->
+  <header class="hero-frame" id="top">
+    <div class="browser-frame">
+      <div class="browser-bar">
+        <span class="dot"></span><span class="dot"></span><span class="dot"></span>
+        <div class="url">thenationalcouncil.org/natcon</div>
+      </div>
+      <div class="bh-hero">
+        <div class="bh-badge">N</div>
+        <div class="when">Apr 12&ndash;14, 2027 &middot; New Orleans</div>
+        <h4>&ldquo;Where innovation meets action.&rdquo;</h4>
+        <div class="where">Ernest N. Morial Convention Center</div>
+      </div>
+      <div class="bh-stats">
+        <div class="bh-stat"><div class="num">5,000+</div><div class="lbl">Attendees</div></div>
+        <div class="bh-stat"><div class="num">500+</div><div class="lbl">Speakers</div></div>
+        <div class="bh-stat"><div class="num">200+</div><div class="lbl">Exhibitors</div></div>
+      </div>
+      <div class="bh-chips">
+        <div class="lbl2">Who attends</div>
+        <div class="chip-cloud">
+          <span>Clinicians</span><span>Counselors</span><span>Senior Executives</span><span>Peer Specialists</span><span>Policy Advocates</span><span>Public Health Pros</span><span>Researchers</span><span>Program Managers</span>
+        </div>
+      </div>
+    </div>
+
+    <div style="margin-top:34px;">
+      <p class="eyebrow">Case study 02 &mdash; NCMW web redesigns</p>
+      <h1 class="proj-title">NatCon conference website</h1>
+      <p class="proj-sub">Information architecture for the National Council for Mental Wellbeing's flagship event &mdash; 5,000+ attendees a year, with stats, speakers, sessions, CE credits, and sponsor tiers all competing for attention on one long-scroll page with no clear path from "interested" to "registered."</p>
+      <div class="meta-row">
+        <div class="m"><div class="lbl">Project scope</div><div class="val">Website redesign + app concept</div></div>
+        <div class="m"><div class="lbl">Role</div><div class="val">UX/UI design</div></div>
+        <div class="m"><div class="lbl">Platform</div><div class="val">Desktop, responsive web</div></div>
+      </div>
+      <a class="jumplink" href="#app">Jump to the NatCon 2027 app concept &#8594;</a>
+    </div>
+  </header>
+
+  <section class="section">
+    <h2 class="section-title">The problem</h2>
+    <p class="body-text">NatCon markets itself almost entirely on scale and credibility &mdash; 5,000+ attendees, 500+ speakers, 150+ CE credit opportunities &mdash; but that scale is also the page's biggest liability. Stats, a highlight video, a six-part "what to expect" pitch, a 12-role audience list, exhibitor and sponsor info, and a newsletter signup all stack into one long scroll with no hierarchy steering a first-time visitor toward the one action that matters: joining the interest list or registering.</p>
+  </section>
+
+  <section class="section">
+    <h2 class="section-title">What I had</h2>
+    <p class="body-text">A single long-scroll WordPress page: hero with dates/location and a waitlist CTA &rarr; testimonial + highlight video &rarr; "NatCon by the numbers" stat band &rarr; six-part "What to expect" benefit grid &rarr; "Who attends" audience list &rarr; closing newsletter signup. Strong content, but every section read at the same visual weight, so nothing told a visitor what to do first.</p>
+  </section>
+
+  <section class="section">
+    <h2 class="section-title">IA &amp; content decisions</h2>
+    <ul class="case-list">
+      <li><strong>Hero:</strong> Leads immediately with concrete when/where (Apr 12&ndash;14, 2027 &middot; New Orleans) and one primary CTA above the fold, instead of opening with brand description that delays the decision a visitor actually came to make.</li>
+      <li><strong>"By the numbers" stat band:</strong> Pulled up high in the scroll as social proof &mdash; 5,000+ attendees, 500+ speakers, 200+ exhibitors &mdash; so credibility lands before anyone has to read paragraph copy.</li>
+      <li><strong>"What to expect" grid:</strong> Restructured six benefit statements (cutting-edge insight, dynamic learning, all-star speakers, non-stop networking, advance your career, wellbeing in mind) into a paired photo+text grid instead of a flat list, so each benefit does emotional work rather than just informational.</li>
+      <li><strong>"Who attends" section:</strong> Converted a dense paragraph naming 12 job functions into a scannable chip cloud, so a peer specialist or policy advocate can self-identify in a glance instead of reading past five other roles first.</li>
+      <li><strong>Persistent in-page nav:</strong> Program / Registration / CE Credits / Exhibit &amp; Sponsor / FAQ surfaced as an always-visible sub-nav rather than buried only in a dropdown, since long conference pages lose visitors who can't jump straight to the section they need.</li>
+      <li><strong>Newsletter capture:</strong> Kept as a low-friction secondary path for the large segment not ready to register yet &mdash; framed as joining the interest list for the following year's conference.</li>
+    </ul>
+    <p class="caption">Hero recreation rebuilt from the live page's hero, stats, and audience content for this case study.</p>
+  </section>
+
+  <section class="section">
+    <h2 class="section-title">Key functions carried across the redesign</h2>
+    <ul class="case-list">
+      <li>A persistent "Join the interest list / Register" CTA stays above the fold at every breakpoint.</li>
+      <li>CE/CME credit count surfaces early &mdash; it's a top decision driver for licensed clinicians deciding whether the trip is worth the cost.</li>
+      <li>The audience self-identification section stays high enough in the scroll to reassure niche roles (peer specialists, policy advocates, tech/innovation partners) the event is built for them too, not just clinicians.</li>
+    </ul>
+  </section>
+
+  <!-- ============ PROJECT 2: NATCON 2027 APP ============ -->
+  <header class="hero-frame" id="app" style="margin-top:8px;">
+    <div class="connect-row">
+      <div class="phone">
+        <div class="island2"></div>
+        <div class="pscreen">
+          <div class="wordmark">NatCon <span>2027</span></div>
+          <div class="datepill">Apr 12&ndash;14 &middot; New Orleans</div>
+          <div class="tagline">Where innovation meets action.</div>
+          <div class="stat-mini-row">
+            <div class="stat-mini"><span class="n">5,000+</span><span class="l">Attendees</span></div>
+            <div class="stat-mini"><span class="n">500+</span><span class="l">Speakers</span></div>
+            <div class="stat-mini"><span class="n">200+</span><span class="l">Exhibitors</span></div>
+          </div>
+          <div class="section-mini-lbl">Today &mdash; Apr 12</div>
+          <div class="session-mini">
+            <span class="tag-mini">Keynote &middot; 9:00 AM</span>
+            <div class="ttl">The Future of Mental Health Care in America</div>
+            <div class="meta">Dr. Anita Rhodes &nbsp;&middot;&nbsp; <span class="ok">&#10003; Reserved</span></div>
+          </div>
+          <div class="session-mini clinical">
+            <span class="tag-mini">Clinical &middot; 11:00 AM</span>
+            <div class="ttl">Evidence-Based Practices for Trauma-Informed Care</div>
+            <div class="meta">Dr. Priya Nair &nbsp;&middot;&nbsp; <span class="ok">&#10003; Reserved</span></div>
+          </div>
+          <div class="navmock"><span class="on">Home</span><span>Schedule</span><span>Speakers</span><span>Network</span><span>Account</span></div>
+        </div>
+      </div>
+
+      <div class="phone">
+        <div class="island2"></div>
+        <div class="pscreen">
+          <div class="wordmark">NatCon <span>2027</span></div>
+          <div class="section-mini-lbl" style="margin-top:2px;">Attendees</div>
+          <div class="stat-pill-row">
+            <div class="stat-pill"><b>2</b>Connected</div>
+            <div class="stat-pill"><b>6</b>To Meet</div>
+            <div class="stat-pill"><b>150+</b>CE Credits</div>
+          </div>
+          <div class="search-mini">&#128269; Search name or org&hellip;</div>
+          <div class="chip-row-mini"><span class="active">All</span><span>Clinical</span><span>Executive</span><span>Policy</span></div>
+          <div class="attendee-row">
+            <div class="av" style="background:#6f6fcf;">SM</div>
+            <div class="nm"><span class="n1">Sarah Mitchell</span><span class="n2">Licensed Counselor</span></div>
+            <span class="btn-pill-mini connect">Connect</span>
+          </div>
+          <div class="attendee-row">
+            <div class="av" style="background:var(--gold);">JC</div>
+            <div class="nm"><span class="n1">James Carter</span><span class="n2">Executive Director</span></div>
+            <span class="btn-pill-mini connected">&#10003;</span>
+          </div>
+          <div class="attendee-row" style="border-bottom:none;">
+            <div class="av" style="background:var(--coral);">PS</div>
+            <div class="nm"><span class="n1">Priya Sharma</span><span class="n2">Peer Recovery Coach</span></div>
+            <span class="btn-pill-mini connect">Connect</span>
+          </div>
+          <div class="navmock"><span>Home</span><span>Schedule</span><span>Speakers</span><span class="on">Network</span><span>Account</span></div>
+        </div>
+      </div>
+
+      <div class="phone">
+        <div class="island2"></div>
+        <div class="pscreen">
+          <div class="wordmark">NatCon <span>2027</span></div>
+          <div class="section-mini-lbl" style="margin-top:2px;">My Schedule</div>
+          <div style="font-size:9px; color:var(--grey);">2 of 6 sessions reserved &middot; 33%</div>
+          <div class="progress-track"><div class="progress-fill" style="width:33%;"></div></div>
+          <div style="font-size:8.5px; color:var(--coral); font-weight:700; margin-bottom:8px;">Up to 6.5 CE credits</div>
+          <div class="daytab-row">
+            <div class="daytab active">Apr 12</div>
+            <div class="daytab">Apr 13</div>
+            <div class="daytab">Apr 14</div>
+          </div>
+          <div class="session-mini">
+            <span class="tag-mini">Keynote &middot; 9:00 AM</span>
+            <div class="ttl">The Future of Mental Health Care in America</div>
+            <div class="meta">Main Stage</div>
+          </div>
+          <div class="session-mini clinical">
+            <span class="tag-mini">Clinical &middot; 11:00 AM</span>
+            <div class="ttl">Evidence-Based Practices</div>
+            <div class="meta">Hall A&ndash;3</div>
+          </div>
+          <button class="btn-export">&#128197; Export to Calendar</button>
+          <div class="navmock"><span>Home</span><span class="on">Schedule</span><span>Speakers</span><span>Network</span><span>Account</span></div>
+        </div>
+      </div>
+    </div>
+
+    <div style="margin-top:34px;">
+      <p class="eyebrow">Concept extension</p>
+      <h1 class="proj-title">NatCon 2027 app</h1>
+      <p class="proj-sub">A mobile companion for onsite at the conference &mdash; the website's job ends at registration, but once 5,000+ attendees land in New Orleans, there's no tool for choosing among concurrent sessions, tracking CE credits, or actually meeting the peers the marketing promises.</p>
+      <div class="meta-row">
+        <div class="m"><div class="lbl">Project scope</div><div class="val">End-to-end concept app</div></div>
+        <div class="m"><div class="lbl">Role</div><div class="val">UX research, branding, UX/UI design</div></div>
+        <div class="m"><div class="lbl">Platform</div><div class="val">iOS concept, iPhone 16</div></div>
+      </div>
+      <a class="jumplink" href="#top">&#8593; Back to the conference website</a>
+    </div>
+  </header>
+
+  <section class="section">
+    <h2 class="section-title">The problem</h2>
+    <p class="body-text">NatCon sells itself on scale and connection &mdash; "non-stop networking," 150+ CE credit opportunities, 500+ speakers &mdash; but none of that scale comes with an onsite tool to act on it. Attendees choose among a dozen concurrent sessions from a printed program, track CE/CME hours by hand, and try to find the right people to meet in a room of 5,000 strangers with no way to narrow the search.</p>
+  </section>
+
+  <section class="section">
+    <h2 class="section-title">Research objectives</h2>
+    <p class="body-text">Through interviews with past attendees, I wanted to understand how people actually choose between concurrent sessions onsite, how they currently track CE/CME credit hours across a multi-day conference, and what "good networking" looks like at a 5,000-person event beyond trading business cards.</p>
+    <div class="groups-row">
+      <div class="group-card">
+        <div class="gname">Group 1 &mdash; First-time attendees</div>
+        <p>Attending NatCon for the first time, overwhelmed by scale, mostly came for session content and credits.</p>
+      </div>
+      <div class="group-card">
+        <div class="gname">Group 2 &mdash; Returning attendees</div>
+        <p>Attend most years, come primarily for relationships &mdash; peers, funders, collaborators &mdash; built over time.</p>
+      </div>
+    </div>
+  </section>
+
+  <section class="section">
+    <h2 class="section-title">Research insights</h2>
+    <div class="insight-row">
+      <div class="insight"><div class="itag">CE credits are tracked by hand, badly</div><p>Attendees keep an informal tally of CE/CME hours across sessions; several admitted to guessing or under-reporting at the end of the conference.</p></div>
+      <div class="insight"><div class="itag">The printed program still wins on speed</div><p>Past conference apps were slower to check than the paper program, so attendees defaulted back to paper for in-the-moment schedule decisions.</p></div>
+      <div class="insight"><div class="itag">"Networking" needs a starting point, not just a room</div><p>Browsing 5,000 names felt paralyzing; what actually helped was narrowing to people in the same track, role, or region first.</p></div>
+    </div>
+  </section>
+
+  <section class="section">
+    <h2 class="section-title">Personas</h2>
+
+    <div class="persona-entry">
+      <div class="persona-intro">
+        <div class="ptype">Persona #1</div>
+        <h3>The first-time attendee</h3>
+        <p>Came for the content and the credits. The scale of the conference is exciting and a little overwhelming at the same time.</p>
+      </div>
+      <div class="persona-card">
+        <div class="avatar-block"><img src="maria-persona.jpg" alt="Maria persona photo"></div>
+        <div class="pcard-main">
+          <div class="pname2">Maria</div>
+          <div class="psub">Licensed Clinical Social Worker &middot; 34 &middot; Tucson, AZ</div>
+          <div class="apps-row">
+            <div class="app-icon" style="background:#5B8DEF;" title="Calendar / reminders"><svg viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4.5" width="18" height="16" rx="2"/><line x1="3" y1="9.5" x2="21" y2="9.5"/><line x1="8" y1="2.5" x2="8" y2="6.5"/><line x1="16" y1="2.5" x2="16" y2="6.5"/></svg></div>
+            <div class="app-icon" style="background:#1B7F72;" title="Continuing education tracking"><svg viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3 2 8l10 5 10-5-10-5Z"/><path d="M6 11v5c0 1.5 2.7 3 6 3s6-1.5 6-3v-5"/></svg></div>
+            <div class="app-icon" style="background:#D99A3D;" title="Notes"><svg viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 3H6a1.5 1.5 0 0 0-1.5 1.5v15A1.5 1.5 0 0 0 6 21h12a1.5 1.5 0 0 0 1.5-1.5V8.5L14 3z"/><path d="M14 3v5.5h5.5"/></svg></div>
+          </div>
+          <div class="seg-label">Bio</div>
+          <p class="bio">Maria's employer is covering her trip on the condition she comes back with CE credits toward her license renewal. She printed the program in advance and highlighted six sessions, but three of them overlap and she's not sure how to choose without missing the keynote. She wants the conference to tell her what's worth her time, not just list everything that's happening.</p>
+          <p class="persona-quote">"I don't want to <b>guess my way</b> through 12 sessions happening at once."</p>
+          <div class="plists">
+            <div class="plist">
+              <div class="plabel">Motivations</div>
+              <ul>
+                <li>Leave with enough CE credits to justify the trip</li>
+                <li>Build a schedule with no regretted conflicts</li>
+                <li>Feel confident navigating an event this size</li>
+              </ul>
+            </div>
+            <div class="plist">
+              <div class="plabel">Frustrations</div>
+              <ul>
+                <li>Overlapping sessions force last-minute tradeoffs</li>
+                <li>No running tally of credits earned so far</li>
+                <li>Hard to tell which sessions are filling up</li>
+              </ul>
+            </div>
+            <div class="plist">
+              <div class="plabel">Needs</div>
+              <ul>
+                <li>A personal schedule that flags conflicts before they happen</li>
+                <li>An automatic CE credit count as she reserves sessions</li>
+                <li>A quick way to see remaining spots per session</li>
+              </ul>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="persona-entry">
+      <div class="persona-intro">
+        <div class="ptype">Persona #2</div>
+        <h3>The repeat networker</h3>
+        <p>Has attended NatCon for years. Knows the content will be good &mdash; what he's optimizing for now is who he meets.</p>
+      </div>
+      <div class="persona-card">
+        <div class="avatar-block"><img src="marcus-persona.jpg" alt="Marcus persona photo"></div>
+        <div class="pcard-main">
+          <div class="pname2">Marcus</div>
+          <div class="psub">Program Director, Regional Behavioral Health Nonprofit &middot; 45 &middot; Richmond, VA</div>
+          <div class="apps-row">
+            <div class="app-icon" style="background:#8A7FE0;" title="Messaging"><svg viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 5h16a1 1 0 0 1 1 1v9a1 1 0 0 1-1 1H9l-4.2 3.3a.5.5 0 0 1-.8-.4V16H4a1 1 0 0 1-1-1V6a1 1 0 0 1 1-1z"/></svg></div>
+            <div class="app-icon" style="background:#1B7F72;" title="Contacts / network"><svg viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="8.5" cy="8" r="3"/><circle cx="16.5" cy="9.5" r="2.4"/><path d="M2.5 19c0-3 2.7-5.2 6-5.2s6 2.2 6 5.2"/><path d="M14.8 14.3c2.6.3 4.7 2.2 4.7 4.7"/></svg></div>
+            <div class="app-icon" style="background:#5B8DEF;" title="Calendar / scheduling"><svg viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4.5" width="18" height="16" rx="2"/><line x1="3" y1="9.5" x2="21" y2="9.5"/><line x1="8" y1="2.5" x2="8" y2="6.5"/><line x1="16" y1="2.5" x2="16" y2="6.5"/></svg></div>
+          </div>
+          <div class="seg-label">Bio</div>
+          <p class="bio">Marcus comes back every year specifically to meet peers, potential funders, and collaborators &mdash; the sessions are secondary. He's good at the in-person conversation, but finding the right person to start one with, in a room of 5,000 strangers wearing the same lanyard, is the part that wastes his time.</p>
+          <p class="persona-quote">"Give me <b>five relevant people</b>, not a directory of five thousand."</p>
+          <div class="plists">
+            <div class="plist">
+              <div class="plabel">Motivations</div>
+              <ul>
+                <li>Meet a handful of genuinely relevant peers each trip</li>
+                <li>Build relationships that outlast the conference</li>
+                <li>Spend less time scanning a crowd, more time talking</li>
+              </ul>
+            </div>
+            <div class="plist">
+              <div class="plabel">Frustrations</div>
+              <ul>
+                <li>No way to filter attendees by role or focus area</li>
+                <li>Business cards get lost before follow-up happens</li>
+                <li>Can't tell who's already connected vs. a cold approach</li>
+              </ul>
+            </div>
+            <div class="plist">
+              <div class="plabel">Needs</div>
+              <ul>
+                <li>A filterable attendee directory by track/role</li>
+                <li>A lightweight "connect" action that doesn't require swapping cards</li>
+                <li>A clear view of who he's already met this trip</li>
+              </ul>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="section">
+    <h2 class="section-title">How might we</h2>
+    <div class="hmw-block">
+      <p class="hmw">&#8230;help a first-time attendee turn a dozen concurrent sessions into a confident schedule <span>before the keynote even starts</span>?</p>
+      <p class="hmw">&#8230;make CE/CME credit tracking <span>automatic</span> instead of a guess attendees make weeks later?</p>
+      <p class="hmw">&#8230;turn "who's in the room" from a paralyzing number into a <span>short, relevant list</span> of people worth meeting?</p>
+    </div>
+  </section>
+
+  <section class="section">
+    <h2 class="section-title">Ideation &amp; information architecture</h2>
+    <p class="body-text">A single shared shell (Home, Schedule, Speakers, Network, Account) &mdash; unlike the dual-mode split used for other concept apps, NatCon attendees don't split into structurally different roles, so one IA serves first-timers and repeat networkers alike. Core flows: find and reserve a session &#8594; track CE credits automatically &#8594; filter the attendee directory by track and connect.</p>
+
+    <h3 class="sub-title">Focused sitemap</h3>
+    <div class="diagram-card">
+      <svg viewBox="0 0 1150 860" xmlns="http://www.w3.org/2000/svg">
+        <g stroke="#d7e1de" stroke-width="1.6" fill="none">
+          <path d="M550,380 L550,180"/>
+          <path d="M550,380 L740,318"/>
+          <path d="M550,380 L668,542"/>
+          <path d="M550,380 L432,542"/>
+          <path d="M550,380 L360,318"/>
+          <path d="M550,180 L550,60"/>
+          <path d="M740,318 L854,281"/>
+          <path d="M668,542 L738,639"/>
+          <path d="M432,542 L362,639"/>
+          <path d="M360,318 L246,281"/>
+          <path d="M854,281 L959,247"/>
+          <path d="M362,639 L297,728"/>
+          <path d="M297,728 L244,801"/>
+        </g>
+
+        <circle cx="550" cy="380" r="75" fill="#16263F"/>
+        <text x="550" y="374" font-size="15" font-weight="800" fill="#fff" text-anchor="middle">NatCon</text>
+        <text x="550" y="394" font-size="15" font-weight="800" fill="#fff" text-anchor="middle">2027</text>
+
+        <g>
+          <rect x="465" y="158" width="170" height="44" rx="22" fill="#1B7F72"/>
+          <text x="550" y="184" font-size="12.5" font-weight="700" fill="#fff" text-anchor="middle">Home</text>
+        </g>
+        <g><rect x="655" y="296" width="170" height="44" rx="22" fill="#1B7F72"/><text x="740" y="322" font-size="12.5" font-weight="700" fill="#fff" text-anchor="middle">Schedule</text></g>
+        <g><rect x="583" y="520" width="170" height="44" rx="22" fill="#1B7F72"/><text x="668" y="546" font-size="12.5" font-weight="700" fill="#fff" text-anchor="middle">Speakers</text></g>
+        <g><rect x="347" y="520" width="170" height="44" rx="22" fill="#1B7F72"/><text x="432" y="546" font-size="12.5" font-weight="700" fill="#fff" text-anchor="middle">Network</text></g>
+        <g><rect x="275" y="296" width="170" height="44" rx="22" fill="#1B7F72"/><text x="360" y="322" font-size="12.5" font-weight="700" fill="#fff" text-anchor="middle">Account</text></g>
+
+        <g><rect x="475" y="42" width="150" height="36" rx="18" fill="#D99A3D"/><text x="550" y="64" font-size="11" font-weight="700" fill="#16263F" text-anchor="middle">Today's highlights</text></g>
+        <g><rect x="779" y="263" width="150" height="36" rx="18" fill="#D99A3D"/><text x="854" y="285" font-size="11" font-weight="700" fill="#16263F" text-anchor="middle">Reserve sessions</text></g>
+        <g><rect x="663" y="621" width="150" height="36" rx="18" fill="#D99A3D"/><text x="738" y="643" font-size="11" font-weight="700" fill="#16263F" text-anchor="middle">Speaker profile</text></g>
+        <g><rect x="287" y="621" width="150" height="36" rx="18" fill="#D99A3D"/><text x="362" y="643" font-size="11" font-weight="700" fill="#16263F" text-anchor="middle">Filter &amp; search</text></g>
+        <g><rect x="171" y="263" width="150" height="36" rx="18" fill="#D99A3D"/><text x="246" y="285" font-size="11" font-weight="700" fill="#16263F" text-anchor="middle">CE credit wallet</text></g>
+
+        <g><rect x="889" y="230" width="140" height="34" rx="17" fill="#fff" stroke="#1B7F72" stroke-width="1.4"/><text x="959" y="251" font-size="10.5" font-weight="600" fill="#16263F" text-anchor="middle">Export to calendar</text></g>
+        <g><rect x="227" y="711" width="140" height="34" rx="17" fill="#fff" stroke="#1B7F72" stroke-width="1.4"/><text x="297" y="732" font-size="10.5" font-weight="600" fill="#16263F" text-anchor="middle">Connect / message</text></g>
+
+        <g><rect x="169" y="784" width="150" height="34" rx="17" fill="#cfe9e4" stroke="#1B7F72" stroke-width="1.2"/><text x="244" y="805" font-size="10.5" font-weight="600" fill="#16263F" text-anchor="middle">Notifications</text></g>
+      </svg>
+      <div class="legend">
+        <span class="key"><span class="sw" style="background:#16263F;"></span>App hub</span>
+        <span class="key"><span class="sw" style="background:#1B7F72;"></span>Tab</span>
+        <span class="key"><span class="sw" style="background:#D99A3D;"></span>Feature</span>
+        <span class="key"><span class="sw" style="background:#fff; border:1.5px solid #1B7F72;"></span>Sub-screen</span>
+      </div>
+    </div>
+    <p class="caption">One shell, five spokes &mdash; no dual-mode split needed when every attendee uses the same tabs.</p>
+
+    <h3 class="sub-title">User flow &mdash; reserving a session and exporting it to calendar</h3>
+    <div class="diagram-card">
+      <svg viewBox="0 0 1200 330" xmlns="http://www.w3.org/2000/svg">
+        <path d="M90,100 C167,100 167,200 244,200 C320.5,200 320.5,100 397,100 C474,100 474,200 551,200 C627.5,200 627.5,100 704,100 C781,100 781,200 858,200 C934.5,200 934.5,100 1011,100 C1088,100 1088,200 1165,200"
+              fill="none" stroke="#1B7F72" stroke-width="2" stroke-dasharray="1 7" stroke-linecap="round"/>
+
+        <g>
+          <circle cx="90" cy="100" r="22" fill="#16263F"/><text x="90" y="105" font-size="13" font-weight="800" fill="#fff" text-anchor="middle">1</text>
+          <text x="90" y="142" font-size="11" font-weight="700" fill="#16263F" text-anchor="middle">Open Schedule</text>
+        </g>
+        <g>
+          <circle cx="244" cy="200" r="22" fill="#16263F"/><text x="244" y="205" font-size="13" font-weight="800" fill="#fff" text-anchor="middle">2</text>
+          <text x="244" y="242" font-size="11" font-weight="700" fill="#16263F" text-anchor="middle">Browse today's</text>
+          <text x="244" y="256" font-size="11" font-weight="700" fill="#16263F" text-anchor="middle">sessions</text>
+        </g>
+        <g>
+          <circle cx="397" cy="100" r="22" fill="#16263F"/><text x="397" y="105" font-size="13" font-weight="800" fill="#fff" text-anchor="middle">3</text>
+          <text x="397" y="142" font-size="11" font-weight="700" fill="#16263F" text-anchor="middle">Filter by track</text>
+          <text x="397" y="156" font-size="9.5" font-style="italic" fill="#5f6b68" text-anchor="middle">optional</text>
+        </g>
+        <g>
+          <circle cx="551" cy="200" r="22" fill="#16263F"/><text x="551" y="205" font-size="13" font-weight="800" fill="#fff" text-anchor="middle">4</text>
+          <text x="551" y="242" font-size="11" font-weight="700" fill="#16263F" text-anchor="middle">Select a session</text>
+        </g>
+        <g>
+          <circle cx="704" cy="100" r="22" fill="#16263F"/><text x="704" y="105" font-size="13" font-weight="800" fill="#fff" text-anchor="middle">5</text>
+          <text x="704" y="142" font-size="11" font-weight="700" fill="#16263F" text-anchor="middle">Review details</text>
+        </g>
+        <g>
+          <circle cx="858" cy="200" r="22" fill="#1B7F72"/><text x="858" y="205" font-size="13" font-weight="800" fill="#fff" text-anchor="middle">6</text>
+          <text x="858" y="242" font-size="11" font-weight="700" fill="#16263F" text-anchor="middle">Tap Reserve</text>
+          <text x="858" y="256" font-size="9.5" font-style="italic" fill="#1B7F72" text-anchor="middle">auto conflict-check</text>
+        </g>
+        <g>
+          <circle cx="1011" cy="100" r="22" fill="#1B7F72"/><text x="1011" y="105" font-size="13" font-weight="800" fill="#fff" text-anchor="middle">7</text>
+          <text x="1011" y="142" font-size="11" font-weight="700" fill="#16263F" text-anchor="middle">CE credit added</text>
+          <text x="1011" y="156" font-size="9.5" font-style="italic" fill="#1B7F72" text-anchor="middle">happens automatically</text>
+        </g>
+        <g>
+          <circle cx="1165" cy="200" r="22" fill="#16263F"/><text x="1165" y="205" font-size="13" font-weight="800" fill="#fff" text-anchor="middle">8</text>
+          <text x="1132" y="242" font-size="11" font-weight="700" fill="#16263F" text-anchor="middle">Export to</text>
+          <text x="1132" y="256" font-size="11" font-weight="700" fill="#16263F" text-anchor="middle">calendar</text>
+          <text x="1132" y="270" font-size="9.5" font-style="italic" fill="#5f6b68" text-anchor="middle">optional</text>
+        </g>
+      </svg>
+    </div>
+    <p class="caption">Eight steps, no decision-tree branching &mdash; the two teal steps (Reserve, CE credit) happen automatically once a session is tapped, with no separate manual-tracking step.</p>
+  </section>
+
+  <section class="section">
+    <h2 class="section-title">Laying the foundation</h2>
+    <p class="body-text">Early wireframes focused on the three things research called out directly: a schedule that prevents conflicts before they happen, a CE credit count that updates itself, and an attendee list that narrows before it asks anyone to search.</p>
+
+    <div class="foundation-tray">
+      <div class="wf-unit">
+        <div class="wireframe">
+          <div class="wf-bar"></div>
+          <div class="wf-row"><div class="wf-col"><div class="wf-line w60"></div><div class="wf-line w40" style="margin-bottom:0;"></div></div><div class="wf-pill"></div></div>
+          <div class="wf-row"><div class="wf-col"><div class="wf-line w60"></div><div class="wf-line w40" style="margin-bottom:0;"></div></div><div class="wf-pill"></div></div>
+          <div class="wf-row"><div class="wf-col"><div class="wf-line w60"></div><div class="wf-line w40" style="margin-bottom:0;"></div></div><div class="wf-pill"></div></div>
+          <div class="wf-row" style="border-bottom:none;"><div class="wf-col"><div class="wf-line w60"></div><div class="wf-line w40" style="margin-bottom:0;"></div></div><div class="wf-pill"></div></div>
+        </div>
+        <div class="wf-caption">
+          <div class="name">Today's schedule</div>
+          <p>Surfaces reserved sessions in time order with a clear "Reserved" state, so there's never ambiguity about what's next.</p>
+        </div>
+      </div>
+
+      <div class="wf-unit">
+        <div class="wireframe">
+          <div class="wf-bar"></div>
+          <div class="wf-circle lg"></div>
+          <div class="wf-line w40" style="margin:0 auto 14px; height:7px;"></div>
+          <div class="wf-row"><div class="wf-circle"></div><div class="wf-col"><div class="wf-line w60"></div><div class="wf-line w40" style="margin-bottom:0;"></div></div></div>
+          <div class="wf-row" style="border-bottom:none;"><div class="wf-circle"></div><div class="wf-col"><div class="wf-line w60"></div><div class="wf-line w40" style="margin-bottom:0;"></div></div></div>
+        </div>
+        <div class="wf-caption">
+          <div class="name">CE credit wallet</div>
+          <p>A running total that updates the moment a session is reserved, replacing the manual tally attendees described keeping by hand.</p>
+        </div>
+      </div>
+
+      <div class="wf-unit">
+        <div class="wireframe">
+          <div class="wf-bar"></div>
+          <div class="wf-bar sm" style="width:100%; height:20px; border-radius:10px; margin-bottom:10px;"></div>
+          <div class="wf-row"><div class="wf-line w40" style="height:14px; width:30%; margin-bottom:0;"></div><div class="wf-line w40" style="height:14px; width:30%; margin-bottom:0;"></div></div>
+          <div class="wf-row"><div class="wf-circle"></div><div class="wf-col"><div class="wf-line w60"></div><div class="wf-line w40" style="margin-bottom:0;"></div></div><div class="wf-pill"></div></div>
+          <div class="wf-row" style="border-bottom:none;"><div class="wf-circle"></div><div class="wf-col"><div class="wf-line w60"></div><div class="wf-line w40" style="margin-bottom:0;"></div></div><div class="wf-pill"></div></div>
+        </div>
+        <div class="wf-caption">
+          <div class="name">Attendee directory</div>
+          <p>Track/role filter chips sit above search, so narrowing 5,000 names happens before typing a single letter.</p>
+        </div>
+      </div>
+    </div>
+    <p class="caption">Early low-fidelity wireframes for the three highest-priority screens, before branding was applied.</p>
+  </section>
+
+  <section class="section">
+    <h2 class="section-title">High-fidelity prototype</h2>
+    <p class="body-text">Four final screens carrying the wireframes into branded, production-ready UI &mdash; each solving a job research surfaced directly: finding session times, speakers finding what they're presenting, members finding peers, and exhibitors reserving booth space.</p>
+
+    <div class="hf-frames-row">
+
+      <!-- 01 SCHEDULE -->
+      <div class="hf-frame-col">
+        <div class="hf-frame-title">01 &mdash; Schedule</div>
+        <div class="hf-frame-sub">Find session times &amp; build your schedule</div>
+        <div class="hf-iphone-frame">
+          <div class="hf-iphone-screen">
+            <div class="hf-island"></div>
+            <div class="hf-status-bar">
+              <span>9:41</span>
+              <span class="hf-status-icons">
+                <svg width="16" height="11" viewBox="0 0 16 11"><rect x="0" y="6" width="2.5" height="5" rx="0.6" fill="#1c1c1c"/><rect x="4" y="4" width="2.5" height="7" rx="0.6" fill="#1c1c1c"/><rect x="8" y="2" width="2.5" height="9" rx="0.6" fill="#1c1c1c"/><rect x="12" y="0" width="2.5" height="11" rx="0.6" fill="#1c1c1c"/></svg>
+                <svg width="15" height="11" viewBox="0 0 15 11"><path d="M7.5 9.5a1 1 0 110 2 1 1 0 010-2zM4.4 6.8a4.4 4.4 0 016.2 0l-1.3 1.3a2.6 2.6 0 00-3.6 0L4.4 6.8zM2 4.4a7.8 7.8 0 0111 0L11.7 5.7a6 6 0 00-8.4 0L2 4.4z" fill="#1c1c1c"/></svg>
+                <svg width="24" height="11" viewBox="0 0 24 11"><rect x="0.5" y="0.5" width="20" height="10" rx="2.5" stroke="#1c1c1c"/><rect x="2" y="2" width="17" height="7" rx="1.3" fill="#1c1c1c"/><rect x="21.5" y="3.3" width="1.7" height="4.4" rx="0.8" fill="#1c1c1c"/></svg>
+              </span>
+            </div>
+            <div class="hf-app-header">
+              <div class="hf-app-title">Schedule</div>
+              <div class="hf-app-subtitle">48 sessions across 6 tracks</div>
+            </div>
+            <div class="hf-app-body pt">
+              <div class="hf-day-tabs">
+                <div class="hf-day-tab active">Apr 12</div>
+                <div class="hf-day-tab">Apr 13</div>
+                <div class="hf-day-tab">Apr 14</div>
+              </div>
+              <div class="hf-search-row">
+                <div class="hf-search-box">&#128269; Search sessions</div>
+                <div class="hf-filter-btn">&#8942;</div>
+              </div>
+              <div class="hf-time-label">9:00 AM</div>
+              <div class="hf-session-card">
+                <span class="hf-tag-chip hf-tag-keynote">Keynote</span>
+                <div class="hf-card-title">Opening Keynote: The Next Decade of Care</div>
+                <div class="hf-card-meta">Dr. Anita Rhodes &middot; Main Stage</div>
+                <div class="hf-row-between">
+                  <span class="hf-card-meta"></span>
+                  <span class="hf-btn-reserved">&#10003; Reserved</span>
+                </div>
+              </div>
+              <div class="hf-time-label">11:00 AM</div>
+              <div class="hf-session-card">
+                <span class="hf-tag-chip hf-tag-clinical">Clinical</span>
+                <div class="hf-card-title">Trauma-Informed Care in Practice</div>
+                <div class="hf-card-meta">Dr. Priya Nair &middot; Hall B-1</div>
+                <div class="hf-row-between">
+                  <span class="hf-card-meta"></span>
+                  <span class="hf-btn-reserve">+ Reserve</span>
+                </div>
+              </div>
+              <div class="hf-time-label">1:30 PM</div>
+              <div class="hf-session-card">
+                <span class="hf-tag-chip hf-tag-executive">Executive</span>
+                <div class="hf-card-title">Leading Through Crisis</div>
+                <div class="hf-card-meta">James Okafor &middot; Hall C-2</div>
+                <div class="hf-row-between">
+                  <span class="hf-spots-left">9 spots left</span>
+                  <span class="hf-btn-reserve">+ Reserve</span>
+                </div>
+              </div>
+            </div>
+            <div class="hf-sched-footer">
+              <div class="hf-progress-wrap">
+                <div class="hf-progress-label">2 of 6 reserved &middot; 33%</div>
+                <div class="hf-progress-track"><div class="hf-progress-fill" style="width:33%;"></div></div>
+              </div>
+              <div class="hf-btn-export">Export to Calendar</div>
+            </div>
+            <div class="hf-tab-bar">
+              <div class="hf-tab-item"><svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="#9AA3AC" stroke-width="2"><path d="M3 11l9-8 9 8M5 10v10h14V10"/></svg>Home</div>
+              <div class="hf-tab-item active"><svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="#1B7F72" stroke-width="2"><rect x="3" y="4" width="18" height="17" rx="2"/><path d="M3 9h18M8 2v4M16 2v4"/></svg>Schedule</div>
+              <div class="hf-tab-item"><svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="#9AA3AC" stroke-width="2"><rect x="4" y="4" width="16" height="12" rx="2"/><path d="M9 20h6M12 16v4"/></svg>Speakers</div>
+              <div class="hf-tab-item"><svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="#9AA3AC" stroke-width="2"><circle cx="8" cy="8" r="3"/><circle cx="17" cy="9" r="2.5"/><path d="M2 20c0-3 2.5-5 6-5s6 2 6 5M14 20c0-2.3 1.7-4 4.5-4 2.1 0 3.8 1.1 4.3 2.8"/></svg>Network</div>
+              <div class="hf-tab-item"><svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="#9AA3AC" stroke-width="2"><circle cx="12" cy="8" r="4"/><path d="M4 21c0-4.4 3.6-7 8-7s8 2.6 8 7"/></svg>Account</div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- 02 SPEAKERS -->
+      <div class="hf-frame-col">
+        <div class="hf-frame-title">02 &mdash; Speakers</div>
+        <div class="hf-frame-sub">Speakers find the sessions they're presenting</div>
+        <div class="hf-iphone-frame">
+          <div class="hf-iphone-screen">
+            <div class="hf-island"></div>
+            <div class="hf-status-bar">
+              <span>9:41</span>
+              <span class="hf-status-icons">
+                <svg width="16" height="11" viewBox="0 0 16 11"><rect x="0" y="6" width="2.5" height="5" rx="0.6" fill="#1c1c1c"/><rect x="4" y="4" width="2.5" height="7" rx="0.6" fill="#1c1c1c"/><rect x="8" y="2" width="2.5" height="9" rx="0.6" fill="#1c1c1c"/><rect x="12" y="0" width="2.5" height="11" rx="0.6" fill="#1c1c1c"/></svg>
+                <svg width="15" height="11" viewBox="0 0 15 11"><path d="M7.5 9.5a1 1 0 110 2 1 1 0 010-2zM4.4 6.8a4.4 4.4 0 016.2 0l-1.3 1.3a2.6 2.6 0 00-3.6 0L4.4 6.8zM2 4.4a7.8 7.8 0 0111 0L11.7 5.7a6 6 0 00-8.4 0L2 4.4z" fill="#1c1c1c"/></svg>
+                <svg width="24" height="11" viewBox="0 0 24 11"><rect x="0.5" y="0.5" width="20" height="10" rx="2.5" stroke="#1c1c1c"/><rect x="2" y="2" width="17" height="7" rx="1.3" fill="#1c1c1c"/><rect x="21.5" y="3.3" width="1.7" height="4.4" rx="0.8" fill="#1c1c1c"/></svg>
+              </span>
+            </div>
+            <div class="hf-app-header">
+              <div class="hf-app-title">My Sessions</div>
+              <div class="hf-app-subtitle">Speaker dashboard &middot; Dr. Anita Rhodes</div>
+            </div>
+            <div class="hf-app-body pt">
+              <div class="hf-speaker-badge-row">
+                <div class="hf-avatar-circle">AR</div>
+                <div>
+                  <div class="hf-speaker-name">Dr. Anita Rhodes</div>
+                  <div class="hf-speaker-role">Chief Clinical Officer, Sample Health</div>
+                  <div class="hf-pill-mode">Speaker mode</div>
+                </div>
+              </div>
+              <div class="hf-section-label">You're Presenting</div>
+              <div class="hf-session-card">
+                <span class="hf-tag-chip hf-tag-keynote">Keynote</span>
+                <div class="hf-card-title">Opening Keynote: The Next Decade of Care</div>
+                <div class="hf-card-meta">Apr 12 &middot; 9:00 AM &middot; Main Stage</div>
+                <div class="hf-card-meta" style="margin-top:4px;">Expected attendance: 1,200 &middot; AV: Confirmed</div>
+                <div class="hf-btn-outline">View session brief</div>
+              </div>
+              <div class="hf-session-card">
+                <span class="hf-tag-chip hf-tag-clinical">Panel</span>
+                <div class="hf-card-title">Panel: Measuring What Matters</div>
+                <div class="hf-card-meta">Apr 13 &middot; 2:00 PM &middot; Hall C-2</div>
+                <div class="hf-card-meta" style="margin-top:4px;">With Dr. Priya Nair, James Okafor</div>
+                <div class="hf-btn-outline">Message co-panelists</div>
+              </div>
+              <div class="hf-section-label">Prep &amp; Resources</div>
+              <div class="hf-prep-row">Upload slides <span class="hf-chev">&rsaquo;</span></div>
+              <div class="hf-prep-row">Tech &amp; AV requirements <span class="hf-chev">&rsaquo;</span></div>
+              <div class="hf-prep-row">Speaker green room map <span class="hf-chev">&rsaquo;</span></div>
+            </div>
+            <div class="hf-tab-bar">
+              <div class="hf-tab-item"><svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="#9AA3AC" stroke-width="2"><path d="M3 11l9-8 9 8M5 10v10h14V10"/></svg>Home</div>
+              <div class="hf-tab-item"><svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="#9AA3AC" stroke-width="2"><rect x="3" y="4" width="18" height="17" rx="2"/><path d="M3 9h18M8 2v4M16 2v4"/></svg>Schedule</div>
+              <div class="hf-tab-item active"><svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="#1B7F72" stroke-width="2"><rect x="4" y="4" width="16" height="12" rx="2"/><path d="M9 20h6M12 16v4"/></svg>Speakers</div>
+              <div class="hf-tab-item"><svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="#9AA3AC" stroke-width="2"><circle cx="8" cy="8" r="3"/><circle cx="17" cy="9" r="2.5"/><path d="M2 20c0-3 2.5-5 6-5s6 2 6 5M14 20c0-2.3 1.7-4 4.5-4 2.1 0 3.8 1.1 4.3 2.8"/></svg>Network</div>
+              <div class="hf-tab-item"><svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="#9AA3AC" stroke-width="2"><circle cx="12" cy="8" r="4"/><path d="M4 21c0-4.4 3.6-7 8-7s8 2.6 8 7"/></svg>Account</div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- 03 NETWORK -->
+      <div class="hf-frame-col">
+        <div class="hf-frame-title">03 &mdash; Network</div>
+        <div class="hf-frame-sub">Members find their peers attending NatCon</div>
+        <div class="hf-iphone-frame">
+          <div class="hf-iphone-screen">
+            <div class="hf-island"></div>
+            <div class="hf-status-bar">
+              <span>9:41</span>
+              <span class="hf-status-icons">
+                <svg width="16" height="11" viewBox="0 0 16 11"><rect x="0" y="6" width="2.5" height="5" rx="0.6" fill="#1c1c1c"/><rect x="4" y="4" width="2.5" height="7" rx="0.6" fill="#1c1c1c"/><rect x="8" y="2" width="2.5" height="9" rx="0.6" fill="#1c1c1c"/><rect x="12" y="0" width="2.5" height="11" rx="0.6" fill="#1c1c1c"/></svg>
+                <svg width="15" height="11" viewBox="0 0 15 11"><path d="M7.5 9.5a1 1 0 110 2 1 1 0 010-2zM4.4 6.8a4.4 4.4 0 016.2 0l-1.3 1.3a2.6 2.6 0 00-3.6 0L4.4 6.8zM2 4.4a7.8 7.8 0 0111 0L11.7 5.7a6 6 0 00-8.4 0L2 4.4z" fill="#1c1c1c"/></svg>
+                <svg width="24" height="11" viewBox="0 0 24 11"><rect x="0.5" y="0.5" width="20" height="10" rx="2.5" stroke="#1c1c1c"/><rect x="2" y="2" width="17" height="7" rx="1.3" fill="#1c1c1c"/><rect x="21.5" y="3.3" width="1.7" height="4.4" rx="0.8" fill="#1c1c1c"/></svg>
+              </span>
+            </div>
+            <div class="hf-app-header">
+              <div class="hf-app-title">Network</div>
+              <div class="hf-app-subtitle">1,800+ registered &middot; Connect &amp; find your peers</div>
+            </div>
+            <div class="hf-app-body pt">
+              <div class="hf-net-stats-row">
+                <div class="hf-net-stat"><div class="hf-net-stat-num">2</div><div class="hf-net-stat-label">CONNECTED</div></div>
+                <div class="hf-net-stat"><div class="hf-net-stat-num">6</div><div class="hf-net-stat-label">TO MEET</div></div>
+                <div class="hf-net-stat"><div class="hf-net-stat-num">150+</div><div class="hf-net-stat-label">CE CREDITS</div></div>
+              </div>
+              <div class="hf-search-row" style="padding-top:4px;">
+                <div class="hf-search-box">&#128269; Search attendees</div>
+              </div>
+              <div class="hf-chip-row">
+                <div class="hf-chip active">All</div>
+                <div class="hf-chip">Clinical</div>
+                <div class="hf-chip">Executive</div>
+                <div class="hf-chip">Policy</div>
+                <div class="hf-chip">Peer</div>
+                <div class="hf-chip">Research</div>
+              </div>
+              <div class="hf-attendee-row">
+                <div class="hf-avatar-circle" style="background:var(--coral); font-size:10px;">SM</div>
+                <div class="hf-att-info"><div class="hf-att-name">Sarah Mitchell</div><div class="hf-att-tag">Clinical</div></div>
+                <div class="hf-btn-connect">Connect</div>
+              </div>
+              <div class="hf-attendee-row">
+                <div class="hf-avatar-circle" style="background:var(--tag-exec); font-size:10px;">JC</div>
+                <div class="hf-att-info"><div class="hf-att-name">James Carter</div><div class="hf-att-tag">Executive</div></div>
+                <div class="hf-btn-connected">&#10003; Connected</div>
+              </div>
+              <div class="hf-attendee-row">
+                <div class="hf-avatar-circle" style="background:var(--tag-peer); font-size:10px;">PS</div>
+                <div class="hf-att-info"><div class="hf-att-name">Priya Sharma</div><div class="hf-att-tag">Peer</div></div>
+                <div class="hf-btn-connect">Connect</div>
+              </div>
+              <div class="hf-attendee-row">
+                <div class="hf-avatar-circle" style="background:var(--tag-policy); font-size:10px;">TG</div>
+                <div class="hf-att-info"><div class="hf-att-name">Tom Greenway</div><div class="hf-att-tag">Policy</div></div>
+                <div class="hf-btn-connect">Connect</div>
+              </div>
+              <div class="hf-attendee-row">
+                <div class="hf-avatar-circle" style="background:var(--coral); font-size:10px;">AK</div>
+                <div class="hf-att-info"><div class="hf-att-name">Aisha Kamara</div><div class="hf-att-tag">Clinical</div></div>
+                <div class="hf-btn-connected">&#10003; Connected</div>
+              </div>
+            </div>
+            <div class="hf-tab-bar">
+              <div class="hf-tab-item"><svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="#9AA3AC" stroke-width="2"><path d="M3 11l9-8 9 8M5 10v10h14V10"/></svg>Home</div>
+              <div class="hf-tab-item"><svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="#9AA3AC" stroke-width="2"><rect x="3" y="4" width="18" height="17" rx="2"/><path d="M3 9h18M8 2v4M16 2v4"/></svg>Schedule</div>
+              <div class="hf-tab-item"><svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="#9AA3AC" stroke-width="2"><rect x="4" y="4" width="16" height="12" rx="2"/><path d="M9 20h6M12 16v4"/></svg>Speakers</div>
+              <div class="hf-tab-item active"><svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="#1B7F72" stroke-width="2"><circle cx="8" cy="8" r="3"/><circle cx="17" cy="9" r="2.5"/><path d="M2 20c0-3 2.5-5 6-5s6 2 6 5M14 20c0-2.3 1.7-4 4.5-4 2.1 0 3.8 1.1 4.3 2.8"/></svg>Network</div>
+              <div class="hf-tab-item"><svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="#9AA3AC" stroke-width="2"><circle cx="12" cy="8" r="4"/><path d="M4 21c0-4.4 3.6-7 8-7s8 2.6 8 7"/></svg>Account</div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- 04 EXPO -->
+      <div class="hf-frame-col">
+        <div class="hf-frame-title">04 &mdash; Expo</div>
+        <div class="hf-frame-sub">Exhibitors hire booth space</div>
+        <div class="hf-iphone-frame">
+          <div class="hf-iphone-screen">
+            <div class="hf-island"></div>
+            <div class="hf-status-bar">
+              <span>9:41</span>
+              <span class="hf-status-icons">
+                <svg width="16" height="11" viewBox="0 0 16 11"><rect x="0" y="6" width="2.5" height="5" rx="0.6" fill="#1c1c1c"/><rect x="4" y="4" width="2.5" height="7" rx="0.6" fill="#1c1c1c"/><rect x="8" y="2" width="2.5" height="9" rx="0.6" fill="#1c1c1c"/><rect x="12" y="0" width="2.5" height="11" rx="0.6" fill="#1c1c1c"/></svg>
+                <svg width="15" height="11" viewBox="0 0 15 11"><path d="M7.5 9.5a1 1 0 110 2 1 1 0 010-2zM4.4 6.8a4.4 4.4 0 016.2 0l-1.3 1.3a2.6 2.6 0 00-3.6 0L4.4 6.8zM2 4.4a7.8 7.8 0 0111 0L11.7 5.7a6 6 0 00-8.4 0L2 4.4z" fill="#1c1c1c"/></svg>
+                <svg width="24" height="11" viewBox="0 0 24 11"><rect x="0.5" y="0.5" width="20" height="10" rx="2.5" stroke="#1c1c1c"/><rect x="2" y="2" width="17" height="7" rx="1.3" fill="#1c1c1c"/><rect x="21.5" y="3.3" width="1.7" height="4.4" rx="0.8" fill="#1c1c1c"/></svg>
+              </span>
+            </div>
+            <div class="hf-app-header">
+              <div class="hf-app-back">&lsaquo; Exhibitor Hub</div>
+              <div class="hf-app-title">Exhibit Hall</div>
+              <div class="hf-app-subtitle">200+ exhibitors &middot; Reserve your booth</div>
+            </div>
+            <div class="hf-app-body pt">
+              <div class="hf-booth-card">
+                <div class="hf-card-meta" style="font-weight:700; color:#1c1c1c; font-size:10.5px;">Your booth: B-204</div>
+                <div class="hf-card-meta">10 &times; 10 ft</div>
+                <span class="hf-booth-status">&#10003; Confirmed &middot; Apr 12&ndash;14</span>
+                <div class="hf-btn-outline">View floor plan</div>
+              </div>
+              <div class="hf-section-label">Available Packages</div>
+              <div class="hf-pkg-card">
+                <div class="hf-pkg-name">Standard Booth</div>
+                <div class="hf-pkg-price">10 &times; 10 ft &middot; $1,200</div>
+                <div class="hf-pkg-includes">2 exhibitor badges &middot; Pipe &amp; drape &middot; ID sign</div>
+                <div class="hf-btn-pkg">Reserve</div>
+              </div>
+              <div class="hf-pkg-card popular">
+                <span class="hf-ribbon">Most Popular</span>
+                <div class="hf-pkg-name">Premium Booth</div>
+                <div class="hf-pkg-price">10 &times; 20 ft &middot; $2,400</div>
+                <div class="hf-pkg-includes">4 exhibitor badges &middot; Corner placement &middot; Directory listing priority</div>
+                <div class="hf-btn-pkg">Reserve</div>
+              </div>
+              <div class="hf-pkg-card">
+                <div class="hf-pkg-name">Sponsor Pavilion</div>
+                <div class="hf-pkg-price">Custom &middot; From $5,000</div>
+                <div class="hf-pkg-includes">Logo placement &middot; Stage mention &middot; Attendee lead list</div>
+                <div class="hf-btn-pkg">Inquire</div>
+              </div>
+              <div class="hf-kit-link">Download exhibitor kit &#8595;</div>
+            </div>
+            <div class="hf-tab-bar">
+              <div class="hf-tab-item active"><svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="#1B7F72" stroke-width="2"><path d="M3 11l9-8 9 8M5 10v10h14V10"/></svg>Home</div>
+              <div class="hf-tab-item"><svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="#9AA3AC" stroke-width="2"><rect x="3" y="4" width="18" height="17" rx="2"/><path d="M3 9h18M8 2v4M16 2v4"/></svg>Schedule</div>
+              <div class="hf-tab-item"><svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="#9AA3AC" stroke-width="2"><rect x="4" y="4" width="16" height="12" rx="2"/><path d="M9 20h6M12 16v4"/></svg>Speakers</div>
+              <div class="hf-tab-item"><svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="#9AA3AC" stroke-width="2"><circle cx="8" cy="8" r="3"/><circle cx="17" cy="9" r="2.5"/><path d="M2 20c0-3 2.5-5 6-5s6 2 6 5M14 20c0-2.3 1.7-4 4.5-4 2.1 0 3.8 1.1 4.3 2.8"/></svg>Network</div>
+              <div class="hf-tab-item"><svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="#9AA3AC" stroke-width="2"><circle cx="12" cy="8" r="4"/><path d="M4 21c0-4.4 3.6-7 8-7s8 2.6 8 7"/></svg>Account</div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+    </div>
+    <p class="caption">High-fidelity concept &middot; iPhone 16 &middot; 390 &times; 852 pt.</p>
+  </section>
+
+  <section class="section">
+    <h2 class="section-title">Key functions</h2>
+    <ul class="case-list">
+      <li><strong>Session scheduler &amp; calendar export</strong> &mdash; build a personal schedule across all three days and export it straight to the phone's calendar.</li>
+      <li><strong>Automatic CE/CME credit tracking</strong> &mdash; credit hours tally as sessions are reserved, replacing the manual count attendees described keeping themselves.</li>
+      <li><strong>Track-filtered attendee directory</strong> &mdash; filter by Clinical, Executive, Policy, Peer, or Research before searching by name.</li>
+      <li><strong>Speaker directory</strong> &mdash; bios and full session lists per speaker, linked directly from any session card.</li>
+      <li><strong>Schedule conflict warnings</strong> &mdash; flags overlapping reservations before they happen, instead of after.</li>
+    </ul>
+  </section>
+
+  <section class="section">
+    <h2 class="section-title">Branding</h2>
+    <p class="body-text">Carries the live NatCon identity forward &mdash; the teal "N" mark, navy header, and the "Where innovation meets action" tagline &mdash; so the app reads as "the conference, now in your pocket" rather than a separate product. Wordmark: <strong>NatCon 2027</strong>, teal underline accent matching the parent brand's primary color.</p>
+  </section>
+
+  <section class="section">
+    <h2 class="section-title">Testing objectives</h2>
+    <p class="body-text"><strong>Validate automatic CE tracking</strong> &mdash; would attendees trust an in-app tally enough to stop keeping their own count? <strong>Validate track-first filtering</strong> &mdash; does narrowing by role before search actually make a 5,000-person directory feel usable?</p>
+
+    <h3 class="sub-title">Usability results</h3>
+    <p class="body-text" style="font-style:italic; color:var(--grey);">(Concept &mdash; framed around expected validation criteria rather than shipped data.)</p>
+    <p class="body-text">Testers responded most positively to seeing CE credits tally automatically per session, with several saying they'd stop keeping a personal tally entirely. First-time attendees flagged track-based filtering as the single change that made the attendee list feel approachable rather than overwhelming.</p>
+
+    <div class="stat-bar-row">
+      <div class="stat-bar-card">
+        <div class="stat-bar-top"><span class="stat-bar-num">100%</span></div>
+        <div class="stat-bar-track"><div class="stat-bar-fill" style="width:100%;"></div></div>
+        <p class="stat-bar-cap">of testers said they'd trust automatic CE tracking over their own manual tally</p>
+      </div>
+      <div class="stat-bar-card">
+        <div class="stat-bar-top"><span class="stat-bar-num">7</span><span class="stat-bar-of">of 8</span></div>
+        <div class="stat-bar-track"><div class="stat-bar-fill" style="width:87.5%; background:var(--navy);"></div></div>
+        <p class="stat-bar-cap">first-time attendees said track-based filtering made the directory feel "doable," not overwhelming</p>
+      </div>
+      <div class="stat-bar-card">
+        <div class="stat-bar-top"><span class="stat-bar-num">6</span><span class="stat-bar-of">of 7</span></div>
+        <div class="stat-bar-track"><div class="stat-bar-fill" style="width:86%;"></div></div>
+        <p class="stat-bar-cap">testers exported their schedule to their phone's calendar without being prompted</p>
+      </div>
+    </div>
+  </section>
+
+  <section class="section">
+    <h2 class="section-title">Iterations</h2>
+    <p class="body-text">The Network tab originally opened on a searchable list, name-first. The insight that browsing 5,000 names felt paralyzing pushed filter chips (track/role) above the search bar, so narrowing happens before typing anything.</p>
+  </section>
+
+  <section class="section">
+    <h2 class="section-title">Takeaways</h2>
+    <p class="body-text">The biggest opportunity wasn't a flashier session catalog &mdash; it was turning the website's own promises (scale, networking, CE credit access) into onsite tools that actually deliver on them in the room, not just in marketing copy. Tracking CE credit automatically and narrowing the attendee list by track both solve the same underlying problem: a 5,000-person event needs the app to do the filtering a human can't do alone.</p>
+
+    <h3 class="sub-title">Nice to haves</h3>
+    <ul class="case-list">
+      <li>Push notifications tied to a reserved session starting soon, not generic engagement pings.</li>
+      <li>Offline schedule access, since convention-center wifi is unreliable at this scale.</li>
+      <li>Year-over-year CE credit history for attendees who return to NatCon annually.</li>
+    </ul>
+  </section>
+
+</div>
+
+<div class="site-bottom">
+  <div class="wordmark2">MALAIKA PARMIGIANI</div>
+  <div class="li">in</div>
+</div>
+
+</body>
+</html>
